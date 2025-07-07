@@ -113,16 +113,11 @@ if (isset($_POST['submit'])) {
         </button>
 
           <label for="cor1">Selecione uma cor para ser principal no sistema:</label>
-<<<<<<< HEAD
           <input type="color" id="cor1" name="cor_principal" value="#f9fafb">
-=======
-          <input type="color" id="cor1" name="cor_principal" value="#000">
->>>>>>> a65406ee7fac1c8b5d34b1ab7740a979cadfd212
           <span id="color-coordinates1"></span>
           
 
           <label for="cor2">Selecione uma cor para ser secundaria no sistema:</label>
-<<<<<<< HEAD
           <input type="color" id="cor2" name="cor_secundaria" value="#ECECFD">
           <span id="color-coordinates2"></span>
 
@@ -139,27 +134,6 @@ if (isset($_POST['submit'])) {
           <div id="quadro-cor2" style="width: 100px; height: 50px; background-color: #ECECFD; border: #000 1px solid  ;"></div>
           <div id="quadro-cor3" style="width: 100px; height: 50px; background-color: #1F2936; border: #000 1px solid  ;"></div>
           <div id="quadro-cor4" style="width: 100px; height: 50px; background-color: #3D4859; border: #000 1px solid  ;"></div>
-=======
-          <input type="color" id="cor2" name="cor_secundaria" value="#000">
-          <span id="color-coordinates2"></span>
-          <div id="quadro-cor2" style="width: 100px; height: 50px; background-color: #000;"></div>
-
-          <label for="cor3">Selecione uma cor para ser o texto do sistema:</label>
-          <input type="color" id="cor3" name="cor_texto" value="#000">
-          <span id="color-coordinates3"></span>
-          <div id="quadro-cor3" style="width: 100px; height: 50px; background-color: #000;"></div>
-
-          <label for="cor4">Selecione uma cor para ser os botões do sistema:</label>
-          <input type="color" id="cor4" name="cor_botoes" value="#000">
-          <span id="color-coordinates4"></span>
-          <div id="quadro-cor4" style="width: 100px; height: 50px; background-color: #000;"></div>
-        </div>
-        <div class="result-color" style="background: #f9fafb; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); padding: 24px 16px; display: flex; flex-direction: column; gap: 12px; max-width: 450px; min-width: 220px; margin: 0 auto; align-items: center;max-height: 500px;">
-          <div id="quadro-cor1" style="width: 100px; height: 50px; background-color: #000;"></div>
-          <div id="quadro-cor2" style="width: 100px; height: 50px; background-color: #000;"></div>
-          <div id="quadro-cor3" style="width: 100px; height: 50px; background-color: #000;"></div>
-          <div id="quadro-cor4" style="width: 100px; height: 50px; background-color: #000;"></div>
->>>>>>> a65406ee7fac1c8b5d34b1ab7740a979cadfd212
         </div>
       </div>
 
