@@ -35,8 +35,11 @@ if (isset($_POST['submit'])) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login</title>
   <link rel="stylesheet" href="assets/css/sign in/login.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
 </head>
 
 <body>
@@ -96,26 +99,30 @@ if (isset($_POST['submit'])) {
         <span>I agree to the <a href="#">Terms of Use and Conditions</a></span>
       </div>
 
-      <div class="next-step" style="display: flex; align-items: center; justify-content:center; cursor:pointer;"id="next-step">
+      <div class="next-step"
+        style="display: flex; align-items: center; justify-content:center; cursor:pointer; margin-top:20px;"
+        id="next-step">
         <p style="margin-right:15px">Continue The Form</p>
-        <button class="cart-button" style="border: none; background: none;"  type="button">
+        <button class="cart-button" style="border: none; background: none;" type="button">
           <span class="material-symbols-rounded">arrow_circle_right</span>
         </button>
       </div>
 
-      <div class="display-colors-form" style="background: rgba(0,0,0,0.18); display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 1000; margin: 0; padding: 0; justify-content: center; align-items: center;">
-        
-        
-        <div class="inputs" style="background: #f9fafb; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); padding: 24px 16px; display: flex; flex-direction: column; gap: 12px; max-width: 450px; min-width: 220px; margin: 0 auto; align-items: center;max-height: 500px; overflow-y: auto;">
+      <div class="display-colors-form"
+        style="background: rgba(0,0,0,0.18); display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 1000; margin: 0; padding: 0; justify-content: center; align-items: center;">
 
-        <button class="close-step" style="background: none; border: none; cursor: pointer;">
-          <span class="material-symbols-rounded">close</span>
-        </button>
+
+        <div class="inputs"
+          style="background: #f9fafb; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); padding: 24px 16px; display: flex; flex-direction: column; gap: 12px; max-width: 450px; min-width: 220px; margin: 0 auto; align-items: center; max-height: 500px; overflow-y: auto;">
+
+          <button class="close-step" style="background: none; border: none; cursor: pointer;">
+            <span class="material-symbols-rounded">close</span>
+          </button>
 
           <label for="cor1">Selecione uma cor para ser principal no sistema:</label>
           <input type="color" id="cor1" name="cor_principal" value="#f9fafb">
           <span id="color-coordinates1"></span>
-          
+
 
           <label for="cor2">Selecione uma cor para ser secundaria no sistema:</label>
           <input type="color" id="cor2" name="cor_secundaria" value="#ECECFD">
@@ -128,12 +135,22 @@ if (isset($_POST['submit'])) {
           <label for="cor4">Selecione uma cor para ser os botões do sistema:</label>
           <input type="color" id="cor4" name="cor_botoes" value="#3D4859">
           <span id="color-coordinates4"></span>
+          <div class="check-color">
+            <input type="checkbox" required>
+            <label for="">Estou ciente das personalizações que fiz, e sei que podem ser modificadas mais tardes na aba
+              Custom</label>
+          </div>
         </div>
-        <div class="result-color" style="background: #f9fafb; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); padding: 24px 16px; display: flex; flex-direction: column; gap: 12px; max-width: 450px; min-width: 220px; margin: 0 auto; align-items: center;max-height: 500px;">
-          <div id="quadro-cor1" style="width: 100px; height: 50px; background-color: #f9fafb; border: #000 1px solid  ;"></div>
-          <div id="quadro-cor2" style="width: 100px; height: 50px; background-color: #ECECFD; border: #000 1px solid  ;"></div>
-          <div id="quadro-cor3" style="width: 100px; height: 50px; background-color: #1F2936; border: #000 1px solid  ;"></div>
-          <div id="quadro-cor4" style="width: 100px; height: 50px; background-color: #3D4859; border: #000 1px solid  ;"></div>
+        <div class="result-color"
+          style="background: #f9fafb; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); padding: 24px 16px; display: flex; flex-direction: column; gap: 12px; max-width: 450px; min-width: 220px; margin: 0 auto; align-items: center;max-height: 500px;">
+          <div id="quadro-cor1"
+            style="width: 100px; height: 50px; background-color: #f9fafb; border: #000 1px solid  ;"></div>
+          <div id="quadro-cor2"
+            style="width: 100px; height: 50px; background-color: #ECECFD; border: #000 1px solid  ;"></div>
+          <div id="quadro-cor3"
+            style="width: 100px; height: 50px; background-color: #1F2936; border: #000 1px solid  ;"></div>
+          <div id="quadro-cor4"
+            style="width: 100px; height: 50px; background-color: #3D4859; border: #000 1px solid  ;"></div>
         </div>
       </div>
 
@@ -162,7 +179,7 @@ if (isset($_POST['submit'])) {
       const quadroCor = document.querySelectorAll('#quadro-cor' + i);
       const colorCoordinates = document.getElementById('color-coordinates' + i);
       if (inputCor) {
-        inputCor.addEventListener('input', function() {
+        inputCor.addEventListener('input', function () {
           // Atualiza todos os quadros de cor com o mesmo id (caso haja duplicidade)
           quadroCor.forEach(q => q.style.backgroundColor = this.value);
           if (colorCoordinates) {
