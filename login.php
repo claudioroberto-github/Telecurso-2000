@@ -96,15 +96,9 @@ if (isset($_POST['submit'])) {
         <span>I agree to the <a href="#">Terms of Use and Conditions</a></span>
       </div>
 
-<<<<<<< HEAD
       <div class="next-step" style="display: flex; align-items: center; justify-content:center; cursor:pointer;"id="next-step">
         <p style="margin-right:15px">Continue The Form</p>
         <button class="cart-button" style="border: none; background: none;"  type="button">
-=======
-      <div class="next-step" style="display: flex;">
-        <p>Continue The Form</p>
-        <button class="cart-button" id="next-step" type="button">
->>>>>>> a65406ee7fac1c8b5d34b1ab7740a979cadfd212
           <span class="material-symbols-rounded">arrow_circle_right</span>
         </button>
       </div>
