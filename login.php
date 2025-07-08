@@ -110,47 +110,45 @@ if (isset($_POST['submit'])) {
 
       <div class="display-colors-form"
         style="background: rgba(0,0,0,0.18); display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 1000; margin: 0; padding: 0; justify-content: center; align-items: center;">
-
-
-        <div class="inputs"
-          style="background: #f9fafb; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); padding: 24px 16px; display: flex; flex-direction: column; gap: 12px; max-width: 450px; min-width: 220px; margin: 0 auto; align-items: center; max-height: 500px; overflow-y: auto;">
-
-          <button class="close-step" style="background: none; border: none; cursor: pointer;">
+        <div class="inputs" style="background: #f9fafb; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); padding: 32px 24px 24px 24px; display: flex; flex-direction: column; gap: 18px; max-width: 450px; min-width: 220px; align-items: center; max-height: 500px; overflow-y: auto; margin: 0 auto; position: relative;">
+          <button class="close-step" style="background: none; border: none; cursor: pointer; position: absolute; top: 10px; right: 10px; font-size: 2rem;">
             <span class="material-symbols-rounded">close</span>
           </button>
-
-          <label for="cor1">Selecione uma cor para ser principal no sistema:</label>
-          <input type="color" id="cor1" name="cor_principal" value="#f9fafb">
-          <span id="color-coordinates1"></span>
-
-
-          <label for="cor2">Selecione uma cor para ser secundaria no sistema:</label>
-          <input type="color" id="cor2" name="cor_secundaria" value="#ECECFD">
-          <span id="color-coordinates2"></span>
-
-          <label for="cor3">Selecione uma cor para ser o texto do sistema:</label>
-          <input type="color" id="cor3" name="cor_texto" value="#1F2936">
-          <span id="color-coordinates3"></span>
-
-          <label for="cor4">Selecione uma cor para ser os botões do sistema:</label>
-          <input type="color" id="cor4" name="cor_botoes" value="#3D4859">
-          <span id="color-coordinates4"></span>
-          <div class="check-color">
+          <div class="color" style="display: flex; flex-direction: column; align-items: center; width: 100%; margin-bottom: 8px;">
+            <label for="cor1" style="width: 100%; text-align: center; font-size: 1.1rem; margin-bottom: 0.5rem;">Selecione uma cor para ser principal no sistema:</label>
+            <input type="color" id="cor1" name="cor_principal" value="#f9fafb" style="width: 60px; height: 60px; border: #000 2px solid; border-radius: 50%; background: none; box-shadow: 0 1px 4px rgba(0,0,0,0.10); margin: 0.5rem auto 0.7rem auto; display: block; cursor: pointer; transition: box-shadow 0.2s;">
+            <span id="color-coordinates1"></span>
+          </div>
+          <div class="color" style="display: flex; flex-direction: column; align-items: center; width: 100%; margin-bottom: 8px;">
+            <label for="cor2" style="width: 100%; text-align: center; font-size: 1.1rem; margin-bottom: 0.5rem;">Selecione uma cor para ser secundaria no sistema:</label>
+            <input type="color" id="cor2" name="cor_secundaria" value="#ECECFD" style="width: 60px; height: 60px; border: #000 2px solid; border-radius: 50%; background: none; box-shadow: 0 1px 4px rgba(0,0,0,0.10); margin: 0.5rem auto 0.7rem auto; display: block; cursor: pointer; transition: box-shadow 0.2s;">
+            <span id="color-coordinates2"></span>
+          </div>
+          <div class="color" style="display: flex; flex-direction: column; align-items: center; width: 100%; margin-bottom: 8px;">
+            <label for="cor3" style="width: 100%; text-align: center; font-size: 1.1rem; margin-bottom: 0.5rem;">Selecione uma cor para ser de fundo no sistema:</label>
+            <input type="color" id="cor3" name="cor_fundo" value="#1F2936" style="width: 60px; height: 60px; border: #000 2px solid; border-radius: 50%; background: none; box-shadow: 0 1px 4px rgba(0,0,0,0.10); margin: 0.5rem auto 0.7rem auto; display: block; cursor: pointer; transition: box-shadow 0.2s;">
+            <span id="color-coordinates3"></span>
+          </div>
+          <div class="color" style="display: flex; flex-direction: column; align-items: center; width: 100%; margin-bottom: 8px;">
+            <label for="cor4" style="width: 100%; text-align: center; font-size: 1.1rem; margin-bottom: 0.5rem;">Selecione uma cor para ser de texto no sistema:</label>
+            <input type="color" id="cor4" name="cor_texto" value="#3D4859" style="width: 60px; height: 60px; border: #000 2px solid; border-radius: 50%; background: none; box-shadow: 0 1px 4px rgba(0,0,0,0.10); margin: 0.5rem auto 0.7rem auto; display: block; cursor: pointer; transition: box-shadow 0.2s;">
+            <span id="color-coordinates4"></span>
+          </div>
+          <div class="check-color" style="display: flex; align-items: center; gap: 8px; margin-top: 10px; margin-bottom: 0; width: 100%; justify-content: flex-start;">
             <input type="checkbox" required>
-            <label for="">Estou ciente das personalizações que fiz, e sei que podem ser modificadas mais tardes na aba
-              Custom</label>
+            <label style="font-size: 1rem; text-align: left; margin: 0;">Estou ciente das personalizações que fiz, e sei que podem ser modificadas mais tardes na aba Custom</label>
           </div>
         </div>
         <div class="result-color"
           style="background: #f9fafb; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); padding: 24px 16px; display: flex; flex-direction: column; gap: 12px; max-width: 450px; min-width: 220px; margin: 0 auto; align-items: center;max-height: 500px;">
           <div id="quadro-cor1"
-            style="width: 100px; height: 50px; background-color: #f9fafb; border: #000 1px solid  ;"></div>
+            style="width: 100px; height: 50px; background-color: #f9fafb; border: #000 1px solid;"></div>
           <div id="quadro-cor2"
-            style="width: 100px; height: 50px; background-color: #ECECFD; border: #000 1px solid  ;"></div>
+            style="width: 100px; height: 50px; background-color: #ECECFD; border: #000 1px solid;"></div>
           <div id="quadro-cor3"
-            style="width: 100px; height: 50px; background-color: #1F2936; border: #000 1px solid  ;"></div>
+            style="width: 100px; height: 50px; background-color: #1F2936; border: #000 1px solid;"></div>
           <div id="quadro-cor4"
-            style="width: 100px; height: 50px; background-color: #3D4859; border: #000 1px solid  ;"></div>
+            style="width: 100px; height: 50px; background-color: #3D4859; border: #000 1px solid;"></div>
         </div>
       </div>
 
