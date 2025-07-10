@@ -112,12 +112,25 @@ if ((!isset($_SESSION['email']) == true) and (!isset($_SESSION['senha']) == true
       </aside>
       <main>
         <h1>Vendas do Mês</h1>
-        <table>
-          <tr>produtos</tr>
-          <tr>gastos</tr>
-          <tr>vendas</tr>
-          <tr>lucro</tr>
-        </table>
+        <table class="dashboard-table">
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th>Idade</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Maria</td>
+      <td>25</td>
+    </tr>
+    <tr>
+      <td>João</td>
+      <td>30</td>
+    </tr>
+  </tbody>
+</table>
+
       </main>
     </div>
     <script src="assets/js/home/home.js"></script>
