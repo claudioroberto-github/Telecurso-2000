@@ -13,6 +13,16 @@ if (isset($_POST['submit'])) {
   $state = $_POST['province'];
   $birth = $_POST['birth'];
   $password = $_POST['passwords'];
+  $cor_principal = $_POST['cor_principal'];
+  $cor_secundaria = $_POST['cor_secundaria'];
+  $cor_fundo = $_POST['cor_fundo'];
+  $cor_texto = $_POST['cor_texto'];
+  // Verifica se o usuário já existe
+  $checkUser = mysqli_query($conexao, "SELECT * FROM usuarios WHERE user='$user' OR email='$email'");
+  if (mysqli_num_rows($checkUser) > 0) {
+    echo "<script>alert('Usuário ou email já cadastrado!');</script>";
+    exit();
+  }
 
   // Upload da imagem
   $img = '';

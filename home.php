@@ -110,8 +110,15 @@ if ((!isset($_SESSION['email']) == true) and (!isset($_SESSION['senha']) == true
           </button>
         </div>
       </aside>
-      <!-- Site main content -->
-      
+      <main>
+        <h1>Vendas do Mês</h1>
+        <table>
+          <tr>produtos</tr>
+          <tr>gastos</tr>
+          <tr>vendas</tr>
+          <tr>lucro</tr>
+        </table>
+      </main>
     </div>
     <script src="assets/js/home/home.js"></script>
   </body>
