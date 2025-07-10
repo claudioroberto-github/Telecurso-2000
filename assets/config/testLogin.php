@@ -13,7 +13,7 @@
         $result = $conexao -> query($sql);
 
         if(mysqli_num_rows($result) < 1){
-            header('Location: /Telecurso 2000/login.php');
+            header('Location: /Telecurso-2000/login.php');
             unset($_SESSION['email']);
             unset($_SESSION['passwords']);
         }
@@ -21,12 +21,12 @@
             $_SESSION['email'] = $email;
             $_SESSION['passwords'] = $password;
             $_SESSION['user'] = $user;
-            header('Location: /Telecurso 2000/home.php');
+            header('Location: /Telecurso-2000/home.php');
         }
 
     }
     else{
-        header('Location: /Telecurso 2000/login.php');
+        header('Location: /Telecurso-2000/login.php');
     }
 
 ?>
