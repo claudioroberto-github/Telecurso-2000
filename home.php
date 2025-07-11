@@ -115,20 +115,55 @@ if ((!isset($_SESSION['email']) == true) and (!isset($_SESSION['senha']) == true
         <table class="dashboard-table">
   <thead>
     <tr>
-      <th>Nome</th>
-      <th>Idade</th>
+      <th>Produtos Vendidos</th>
+      <th>Quantidade</th>
+      <th>Dia</th>
+      <th>Total Vendido</th>
+      <th>Gastos</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>Maria</td>
+      <td>Lanche</td>
       <td>25</td>
+      <td>25/03/2025</td>
+      <td>R$150,00</td>
+      <td>R$90,00</td>
     </tr>
     <tr>
-      <td>João</td>
+      <td>Bebida</td>
       <td>30</td>
+      <td>26/03/2025</td>
+      <td>R$120,00</td>
+      <td>R$60,00</td>
     </tr>
+    <tr>
+      <td>Doces</td>
+      <td>20</td>
+      <td>27/03/2025</td>
+      <td>R$80,00</td>
+      <td>R$40,00</td>
+    </tr>
+    <tr>
+      <td>Salgados</td>
+      <td>15</td>
+      <td>28/03/2025</td>
+      <td>R$90,00</td>
+      <td>R$50,00</td>
+    </tr>
+    <tr>
   </tbody>
+  <tfoot>
+    <tr>
+      <td colspan="3">Total</td>
+      <td>R$440,00</td>
+      <td>R$240,00</td>
+</tr>
+    <tr>
+      <td colspan="3">Lucro</td>
+      <td colspan="2">R$200,00</td>
+    </tr>
+  </tfoot>
 </table>
 
       </main>

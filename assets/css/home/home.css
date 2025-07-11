@@ -354,6 +354,13 @@ body.dark-theme .theme-toggle-indicator {
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
+main{
+    margin-left: 270px;
+    transition: margin-left 0.4s ease;
+    display: flex;
+    flex-direction: column;
+}
+
 /* Responsive media query code for small screens */
 @media (max-width: 768px) {
     body::before {
