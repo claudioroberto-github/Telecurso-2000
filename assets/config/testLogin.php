@@ -1,14 +1,14 @@
 <?php
     session_start();
 
-    if(isset($_POST['submit-login']) && !empty($_POST['email']) && !empty($_POST['passwords']) && !empty($_POST['user'])){
+    if(isset($_POST['submit-login']) && !empty($_POST['email']) && !empty($_POST['passwords'])){
 
         include_once('config.php');
         $email = $_POST['email'];
         $password = $_POST['passwords'];
         $user = $_POST['user'];
 
-        $sql = "SELECT * FROM usuarios WHERE email = '$email' and passwords = '$password' and user = '$user'";
+        $sql = "SELECT * FROM usuarios WHERE email = '$email' and passwords = '$password'";
 
         $result = $conexao -> query($sql);
 

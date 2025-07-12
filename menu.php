@@ -183,7 +183,7 @@ $logged = $_SESSION['user'];
         </section>
       </div>
       <div class="cart-display" style="display: none; justify-content: center; align-items: center; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.18); z-index: 1000; margin: 0;">
-        <section class="container normal-section" style="box-shadow: 0 2px 12px rgba(0,0,0,0.08); border-radius: 12px; background: #fff; padding: 24px; display: flex; flex-direction: column; width: 100%; max-width: 700px; min-width: 320px; max-height: 500px; overflow-y: auto;">
+        <section class="container normal-section" style="box-shadow: 0 4px 24px rgba(0,0,0,0.18); border-radius: 18px; background: #fff; padding: 32px 24px; display: flex; flex-direction: column; width: 90vw; max-width: 600px; min-width: 260px; max-height: 80vh; overflow-y: auto; align-items: center;">
           <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
             <h2 class="section-title" style="margin-bottom: 0;">Carrinho</h2>
             <button class="close-cart" style="background: none; border: none; cursor: pointer;">
@@ -191,19 +191,19 @@ $logged = $_SESSION['user'];
             </button>
           </div>
           <table class="cart-table" style="width: 100%; display: table; border-collapse: collapse; margin-bottom: 16px; overflow-y: auto; justify-content: center; align-items: center;">
-            <thead>
+            <thead style="background: #f5f5f5;">
               <tr>
-                <th class="table-head-item first-col">Item</th>
-                <th class="table-head-item second-col">Preço</th>
-                <th class="table-head-item third-col">Quantidade</th>
+                <th class="table-head-item first-col" style="padding: 12px 8px; border-bottom: 2px solid #ececec; text-align: left; font-weight: 600;">Item</th>
+                <th class="table-head-item second-col" style="padding: 12px 8px; border-bottom: 2px solid #ececec; text-align: center; font-weight: 600;">Preço</th>
+                <th class="table-head-item third-col" style="padding: 12px 8px; border-bottom: 2px solid #ececec; text-align: center; font-weight: 600;">Quantidade</th>
               </tr>
             </thead>
             <tbody>
             </tbody>
             <tfoot>
               <tr>
-                <td colspan="3" class="cart-total-container">
-                  <strong>Total</strong>
+                <td colspan="3" class="cart-total-container" style="padding: 16px 8px; border-top: 2px solid #ececec; text-align: right; font-size: 1.1rem; background: #fafafa; font-weight: 600;">
+                  <strong style="margin-right: 12px;">Total</strong>
                   <span>R$0,00</span>
                 </td>
               </tr>
@@ -215,205 +215,27 @@ $logged = $_SESSION['user'];
 
 
     </main>
-    <script src="home.js"></script>
-    <script src="test/js/loja.js"></script>
+    <style>
+      .cart-display::-webkit-scrollbar {
+        width: 10px;
+        border-radius: 18px;
+        background: #ececec;
+      }
+      .cart-display::-webkit-scrollbar-thumb {
+        background: #d1d1d1;
+        border-radius: 18px;
+      }
+      .cart-display {
+        scrollbar-width: thin;
+        scrollbar-color: #d1d1d1 #ececec;
+        border-radius: 18px;
+      }
+    </style>
+    <script src="assets/js/menu/menu.js"></script>
+    <script src="assets/js/home/home.js"></script>
 
     <script>
-      const sidebarToggleBtns = document.querySelectorAll(".sidebar-toggle");
-const sidebar = document.querySelector(".sidebar");
-const searchForm = document.querySelector(".search-form");
-const themeToggleBtn = document.querySelector(".theme-toggle");
-const themeIcon = themeToggleBtn.querySelector(".theme-icon");
-const menuLinks = document.querySelectorAll(".menu-link");
-// Updates the theme icon based on current theme and sidebar state
-const updateThemeIcon = () => {
-  const isDark = document.body.classList.contains("dark-theme");
-  themeIcon.textContent = sidebar.classList.contains("collapsed") ? (isDark ? "light_mode" : "dark_mode") : "dark_mode";
-};
-// Apply dark theme if saved or system prefers, then update icon
-const savedTheme = localStorage.getItem("theme");
-const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-const shouldUseDarkTheme = savedTheme === "dark" || (!savedTheme && systemPrefersDark);
-document.body.classList.toggle("dark-theme", shouldUseDarkTheme);
-updateThemeIcon();
-// Toggle between themes on theme button click
-themeToggleBtn.addEventListener("click", () => {
-  const isDark = document.body.classList.toggle("dark-theme");
-  localStorage.setItem("theme", isDark ? "dark" : "light");
-  updateThemeIcon();
-});
-// Toggle sidebar collapsed state on buttons click
-sidebarToggleBtns.forEach((btn) => {
-  btn.addEventListener("click", () => {
-    sidebar.classList.toggle("collapsed");
-    updateThemeIcon();
-  });
-});
-// Expand the sidebar when the search form is clicked
-searchForm.addEventListener("click", () => {
-  if (sidebar.classList.contains("collapsed")) {
-    sidebar.classList.remove("collapsed");
-    searchForm.querySelector("input").focus();
-  }
-});
-// Expand sidebar by default on large screens
-if (window.innerWidth > 768) sidebar.classList.remove("collapsed");
 
-// aqui vai abrir o carrinho de compras
-const caixa = document.querySelector('.cart-display');
-const cartButton = document.getElementById('cart-button');
-const closeCartButton = document.querySelector('.close-cart');
-
-cartButton.addEventListener('click', () => {
-  caixa.style.display = 'flex';
-});
-closeCartButton.addEventListener('click', () => {
-  caixa.style.display = 'none';
-});
-
-
-// Aqui vai ficar o código para os itens do carrinho
-
-if (document.readyState == 'loading') {
-  document.addEventListener('DOMContentLoaded', ready)
-} else {
-  ready()
-}
-
-var totalAmount = "0,00"
-
-function ready() {
-  // Botão remover produto
-  const removeCartProductButtons = document.getElementsByClassName("remove-product-button")
-  for (var i = 0; i < removeCartProductButtons.length; i++) {
-    removeCartProductButtons[i].addEventListener("click", removeProduct)
-  }
-
-  // Mudança valor dos inputs
-  const quantityInputs = document.getElementsByClassName("product-qtd-input")
-  for (var i = 0; i < quantityInputs.length; i++) {
-    quantityInputs[i].addEventListener("change", checkIfInputIsNull)
-  }
-
-  // Botão add produto ao carrinho
-  const addToCartButtons = document.getElementsByClassName("button-hover-background")
-  for (var i = 0; i < addToCartButtons.length; i++) {
-    addToCartButtons[i].addEventListener("click", addProductToCart)
-  }
-
-  // Botão comprar
-  const purchaseButton = document.getElementsByClassName("purchase-button")[0]
-  purchaseButton.addEventListener("click", makePurchase)
-}
-
-function removeProduct(event) {
-  event.target.parentElement.parentElement.remove()
-  updateTotal()
-}
-
-function checkIfInputIsNull(event) {
-  if (event.target.value === "0") {
-    event.target.parentElement.parentElement.remove()
-  }
-
-  updateTotal()
-}
-
-function addProductToCart(event) {
-  const button = event.target
-  const productInfos = button.parentElement.parentElement
-  const productImage = productInfos.getElementsByClassName("product-image")[0].src
-  const productName = productInfos.getElementsByClassName("product-title")[0].innerText
-  const productPrice = productInfos.getElementsByClassName("product-price")[0].innerText
-
-  const productsCartNames = document.getElementsByClassName("cart-product-title")
-  for (var i = 0; i < productsCartNames.length; i++) {
-    if (productsCartNames[i].innerText === productName) {
-      productsCartNames[i].parentElement.parentElement.getElementsByClassName("product-qtd-input")[0].value++
-      updateTotal()
-      return
-    }
-  }
-
-  let newCartProduct = document.createElement("tr")
-  newCartProduct.classList.add("cart-product")
-
-  newCartProduct.innerHTML =
-    `
-      <td class="product-identification">
-        <img src="${productImage}" alt="${productName}" class="cart-product-image">
-        <strong class="cart-product-title">${productName}</strong>
-      </td>
-      <td>
-        <span class="cart-product-price">${productPrice}</span>
-      </td>
-      <td>
-        <input type="number" value="1" min="0" class="product-qtd-input">
-        <button type="button" class="remove-product-button">Remover</button>
-      </td>
-    `
-
-  const tableBody = document.querySelector(".cart-table tbody")
-  tableBody.append(newCartProduct)
-  updateTotal()
-
-  newCartProduct.getElementsByClassName("remove-product-button")[0].addEventListener("click", removeProduct)
-  newCartProduct.getElementsByClassName("product-qtd-input")[0].addEventListener("change", checkIfInputIsNull)
-}
-
-function makePurchase() {
-  if (totalAmount === "0,00") {
-    alert("Seu carrinho está vazio!")
-  } else {
-    alert(
-      `
-        Obrigado pela sua compra!
-        Valor do pedido: R$${totalAmount}\n
-        Volte sempre :)
-      `
-    )
-
-    document.querySelector(".cart-table tbody").innerHTML = ""
-    updateTotal()
-  }
-}
-
-// Atualizar o valor total do carrinho
-function updateTotal() {
-  const cartProducts = document.getElementsByClassName("cart-product")
-  totalAmount = 0
-
-  for (var i = 0; i < cartProducts.length; i++) {
-    const productPrice = cartProducts[i].getElementsByClassName("cart-product-price")[0].innerText.replace("R$", "").replace(",", ".")
-    const productQuantity = cartProducts[i].getElementsByClassName("product-qtd-input")[0].value
-
-    totalAmount += productPrice * productQuantity
-  }
-
-  totalAmount = totalAmount.toFixed(2)
-  totalAmount = totalAmount.replace(".", ",")
-  document.querySelector(".cart-total-container span").innerText = "R$" + totalAmount
-}
-// Atualizar o valor total do carrinho ao carregar a página
-updateTotal();
-// Atualizar o valor total do carrinho ao redimensionar a janela
-
-window.addEventListener("resize", () => {
-  if (window.innerWidth > 768) {
-    sidebar.classList.remove("collapsed");
-    searchForm.querySelector("input").focus();
-  } else {
-    sidebar.classList.add("collapsed");
-  }
-});
-
-// Garante que clicar no ícone do menu também aciona o botão
-document.querySelectorAll('.sidebar-toggle .material-symbols-rounded').forEach(function(icon) {
-      icon.addEventListener('click', function(e) {
-        e.stopPropagation();
-        this.closest('button').click();
-      });
-    });
     </script>
 </body>
 

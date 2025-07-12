@@ -24,15 +24,8 @@ if (isset($_POST['submit'])) {
     exit();
   }
 
-  // Upload da imagem
-  $img = '';
-  if (isset($_FILES["img"]) && $_FILES["img"]["error"] == 0) {
-    $img = $_FILES["img"]["name"];
-    move_uploaded_file($_FILES["img"]["tmp_name"], "img/phpImages/" . $img);
-  }
-
-  $result = mysqli_query($conexao, "INSERT INTO usuarios(user, email, company, cnpj, telephone, dwelling, city, province, birth, img, passwords)
-    VALUES('$user', '$email', '$company', '$cnpj', '$telephone', '$address', '$city', '$state', '$birth', '$img', '$password')");
+  $result = mysqli_query($conexao, "INSERT INTO usuarios(user, email, company, cnpj, telephone, dwelling, city, province, birth, passwords)
+    VALUES('$user', '$email', '$company', '$cnpj', '$telephone', '$address', '$city', '$state', '$birth', '$password')");
 }
 ?>
 
