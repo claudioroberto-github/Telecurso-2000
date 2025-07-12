@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 10/07/2025 às 03:37
+-- Tempo de geração: 12/07/2025 às 22:08
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.0.30
 
@@ -60,7 +60,24 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `user`, `company`, `cnpj`, `email`, `telephone`, `dwelling`, `city`, `province`, `birth`, `img`, `passwords`) VALUES
-(31, 'Cláudio Roberto', 'Kopas Engenering', 12316532, 'Diretoria@kopas.engeneer.sp.gov.br', 2147483647, 'Rua José Bonifácio', 'Presidente Prudente', 'SP', '0000-00-00', NULL, '123');
+(37, 'DEBORA ROSMANN CORDEIRO RUI', 'claudio', 545454, 'claudiorobertocordeirorui@gmail.com', 2147483647, 'Rua José Bonifácio', 'Presidente Prudente', 'SP', '2121-12-12', 'CLAUDIO RUI - currículo.pdf (1).png', '123'),
+(38, 'Cláudio Roberto', 'Kopas Engenering', 12316532, 'Diretoria@kopas.engeneer.sp.gov.br', 2147483647, 'Rua José Bonifácio', 'Presidente Prudente', 'SP', '1212-12-12', '', '123');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `vendas_produtos`
+--
+
+CREATE TABLE `vendas_produtos` (
+  `pedido` int(255) NOT NULL,
+  `data_venda` datetime NOT NULL,
+  `produtos` varchar(255) NOT NULL,
+  `quantVendida` int(7) NOT NULL,
+  `preço` double NOT NULL,
+  `gastos` int(11) NOT NULL,
+  `lucro` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Índices para tabelas despejadas
@@ -73,6 +90,12 @@ ALTER TABLE `usuarios`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Índices de tabela `vendas_produtos`
+--
+ALTER TABLE `vendas_produtos`
+  ADD PRIMARY KEY (`pedido`);
+
+--
 -- AUTO_INCREMENT para tabelas despejadas
 --
 
@@ -80,7 +103,13 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de tabela `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+
+--
+-- AUTO_INCREMENT de tabela `vendas_produtos`
+--
+ALTER TABLE `vendas_produtos`
+  MODIFY `pedido` int(255) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
