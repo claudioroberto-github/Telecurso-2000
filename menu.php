@@ -3,7 +3,7 @@
 session_start();
 include_once('assets/config/config.php');
 if ((!isset($_SESSION['email']) == true) and (!isset($_SESSION['senha']) == true)) {
-  header('Location: /Telecurso 2000/login.php');
+  header('Location: /Telecurso-2000/login.php');
   unset($_SESSION['email']);
   unset($_SESSION['passwords']);
 }
@@ -73,7 +73,7 @@ $logged = $_SESSION['user'];
             </a>
           </li>
           <li class="menu-item">
-            <a href="#" class="menu-link">
+            <a href="products.php" class="menu-link">
               <span class="material-symbols-rounded">storefront</span>
               <span class="menu-label">Products</span>
             </a>

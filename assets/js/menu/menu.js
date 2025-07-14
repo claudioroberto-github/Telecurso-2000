@@ -1,3 +1,18 @@
+//abrir e fechar o carrinho de compras
+
+const caixa = document.querySelector('.cart-display');
+const cartButton = document.getElementById('cart-button');
+const closeCartButton = document.querySelector('.close-cart');
+
+cartButton.addEventListener('click', () => {
+  caixa.style.display = 'flex';
+});
+closeCartButton.addEventListener('click', () => {
+  caixa.style.display = 'none';
+});
+
+// Funções para manipulação do carrinho de compras
+
 if (document.readyState == 'loading') {
   document.addEventListener('DOMContentLoaded', ready)
 } else {
@@ -72,11 +87,13 @@ function addProductToCart(event) {
         <span class="cart-product-price">${productPrice}</span>
       </td>
       <td>
-        <input type="number" value="1" min="0" class="product-qtd-input">
-        <button type="button" class="remove-product-button">Remover</button>
+        <div style="display: flex; align-items: center; gap: 10px; justify-content: center;">
+          <input type="number" value="1" min="0" class="product-qtd-input" style="width: 50px; padding: 4px 8px; border-radius: 6px; border: 1px solid #ccc;">
+          <button type="button" class="remove-product-button" style="padding: 4px 12px; border-radius: 6px; background: #f44336; color: #fff; border: none; cursor: pointer; font-size: 0.95rem;">Remover</button>
+        </div>
       </td>
     `
-  
+
   const tableBody = document.querySelector(".cart-table tbody")
   tableBody.append(newCartProduct)
   updateTotal()
@@ -88,7 +105,7 @@ function addProductToCart(event) {
 function makePurchase() {
   if (totalAmount === "0,00") {
     alert("Seu carrinho está vazio!")
-  } else {   
+  } else {
     alert(
       `
         Obrigado pela sua compra!
@@ -113,7 +130,7 @@ function updateTotal() {
 
     totalAmount += productPrice * productQuantity
   }
-  
+
   totalAmount = totalAmount.toFixed(2)
   totalAmount = totalAmount.replace(".", ",")
   document.querySelector(".cart-total-container span").innerText = "R$" + totalAmount

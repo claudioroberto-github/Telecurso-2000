@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 12/07/2025 às 22:08
+-- Tempo de geração: 14/07/2025 às 03:26
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.0.30
 
@@ -32,6 +32,21 @@ CREATE TABLE `cores` (
   `cor_secundaria` varchar(7) DEFAULT NULL,
   `cor_fundo` varchar(7) DEFAULT NULL,
   `cor_texto` varchar(7) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `produtos`
+--
+
+CREATE TABLE `produtos` (
+  `id_produto` int(11) NOT NULL,
+  `nome_produto` varchar(100) NOT NULL,
+  `preco_produto` decimal(10,2) NOT NULL,
+  `classe_produto` varchar(100) NOT NULL,
+  `img_produto` varchar(255) DEFAULT NULL,
+  `id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -84,6 +99,13 @@ CREATE TABLE `vendas_produtos` (
 --
 
 --
+-- Índices de tabela `produtos`
+--
+ALTER TABLE `produtos`
+  ADD PRIMARY KEY (`id_produto`),
+  ADD KEY `id` (`id`);
+
+--
 -- Índices de tabela `usuarios`
 --
 ALTER TABLE `usuarios`
@@ -100,6 +122,12 @@ ALTER TABLE `vendas_produtos`
 --
 
 --
+-- AUTO_INCREMENT de tabela `produtos`
+--
+ALTER TABLE `produtos`
+  MODIFY `id_produto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
 -- AUTO_INCREMENT de tabela `usuarios`
 --
 ALTER TABLE `usuarios`
@@ -110,6 +138,16 @@ ALTER TABLE `usuarios`
 --
 ALTER TABLE `vendas_produtos`
   MODIFY `pedido` int(255) NOT NULL AUTO_INCREMENT;
+
+--
+-- Restrições para tabelas despejadas
+--
+
+--
+-- Restrições para tabelas `produtos`
+--
+ALTER TABLE `produtos`
+  ADD CONSTRAINT `produtos_ibfk_1` FOREIGN KEY (`id`) REFERENCES `usuarios` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

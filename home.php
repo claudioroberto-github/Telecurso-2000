@@ -3,7 +3,7 @@
 session_start();
 include_once('assets/config/config.php');
 if ((!isset($_SESSION['email']) == true) and (!isset($_SESSION['senha']) == true)) {
-  header('Location: /Telecurso 2000/login.php');
+  header('Location: /Telecurso-2000/login.php');
   unset($_SESSION['email']);
   unset($_SESSION['passwords']);
 }
@@ -74,7 +74,7 @@ $logged = $_SESSION['user'];
             </a>
           </li>
           <li class="menu-item">
-            <a href="#" class="menu-link">
+            <a href="products.php" class="menu-link">
               <span class="material-symbols-rounded">storefront</span>
               <span class="menu-label">Products</span>
             </a>
@@ -203,7 +203,7 @@ $logged = $_SESSION['user'];
           <table class="vendas-mes">
             <tbody>
             <tr>
-              <td>1</td>
+              <td><a href="#">1</a></td>
               <td>Lanche</td>
               <td>25</td>
               <td>R$ 25,00</td>
@@ -211,68 +211,36 @@ $logged = $_SESSION['user'];
               <td>R$ 6,25</td>
             </tr>
             <tr>
-              <td>2</td>
-              <td>Pastel</td>
-              <td>6</td>
-              <td>R$ 3,00</td>
-              <td>R$ 2,25</td>
-              <td>R$ 0,75</td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>Sanduíche</td>
-              <td>3</td>
-              <td>R$ 20,00</td>
-              <td>R$ 15,00</td>
-              <td>R$ 5,00</td>
-            </tr>
-            <tr>
-              <td>4</td>
-              <td>Pizza</td>
-              <td>2</td>
+              <td><a href="#">2</a></td>
+              <td>Bebida</td>
+              <td>15</td>
               <td>R$ 30,00</td>
               <td>R$ 22,50</td>
               <td>R$ 7,50</td>
             </tr>
             <tr>
-              <td>5</td>
-              <td>Refrigerante</td>
+              <td><a href="#">3</a></td>
+              <td>Doces</td>
               <td>10</td>
+              <td>R$ 20,00</td>
+              <td>R$ 15,00</td>
+              <td>R$ 5,00</td>
+            </tr>
+            <tr>
+              <td><a href="#">4</a></td>
+              <td>Salada</td>
+              <td>5</td>
               <td>R$ 15,00</td>
               <td>R$ 11,25</td>
               <td>R$ 3,75</td>
-            </tr>
+            </tr> 
             <tr>
-              <td>6</td>
-              <td>Suco</td>
-              <td>5</td>
-              <td>R$ 8,00</td>
-              <td>R$ 6,00</td>
-              <td>R$ 2,00</td>
-            </tr>
-            <tr>
-              <td>7</td>
-              <td>Água</td>
-              <td>8</td>
-              <td>R$ 4,00</td>
-              <td>R$ 3,00</td>
-              <td>R$ 1,00</td>
-            </tr>
-            <tr>
-              <td>8</td>
-              <td>Doces</td>
-              <td>12</td>
-              <td>R$ 6,00</td>
-              <td>R$ 4,50</td>
-              <td>R$ 1,50</td>
-            </tr>
-            <tr>
-              <td>9</td>
-              <td>Salada de Frutas</td>
-              <td>4</td>
+              <td><a href="#">5</a></td>
+              <td>Refrigerante</td>
+              <td>20</td>
+              <td>R$ 40,00</td>
+              <td>R$ 30,00</td>
               <td>R$ 10,00</td>
-              <td>R$ 7,50</td>
-              <td>R$ 2,50</td>
             </tr>
           </tbody>
           <tfoot>
