@@ -160,7 +160,7 @@ if (isset($_POST['add_product'])) {
       </div>
     </aside>
     <!-- Main Content -->
-    <main class="main-content">
+    <main class="main-content" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px;">
       <button class="cart-button" id="cart-button">
         <span class="material-symbols-rounded">add</span>
       </button>
@@ -252,7 +252,7 @@ if (isset($_POST['add_product'])) {
         </form>
       </div>
 
-      <div class="CRUD_products" style="display: flex; flex-wrap: wrap; gap: 20px; padding: 20px;">
+      <div class="CRUD_products" style="display: flex; flex-wrap: wrap; gap: 20px; padding: 20px; justify-content: center; align-items: center;">
   <?php
   // Busca os produtos do usuário logado
   $query = "SELECT * FROM produtos WHERE id = ?";
@@ -261,9 +261,16 @@ if (isset($_POST['add_product'])) {
   $stmt->execute();
   $result = $stmt->get_result();
 
-  while ($row = $result->fetch_assoc()):
+  if ($result->num_rows === 0):
   ?>
-    <div style="background: #fff; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); padding: 16px; max-width: 220px; text-align: center;">
+    <div style="width:100%;text-align:center;padding:40px 0;color:#3D4859;font-size:1.15rem;opacity:0.85;">
+      <span style="font-size:2.2rem;display:block;margin-bottom:10px;">🛒</span>
+      Não há produtos, adicione para começar suas vendas
+    </div>
+  <?php else:
+    while ($row = $result->fetch_assoc()):
+  ?>
+    <div style="background: #fff; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); padding: 16px; width: 220px; text-align: center;">
       <?php
         $img_path = $row['img_produto'];
         // Se o caminho já começa com 'assets/uploads/', usa direto; senão, ajusta
@@ -286,7 +293,7 @@ if (isset($_POST['add_product'])) {
         <button type="submit" class="btn-crud btn-delete">Excluir</button>
       </form>
     </div>
-  <?php endwhile; ?>
+  <?php endwhile; endif; ?>
   
 <style>
   .btn-crud {
