@@ -55,49 +55,49 @@ $id_usuario = $_SESSION['id'];
         <ul class="menu-list">
           <li class="menu-item">
             <a href="home.php" class="menu-link">
-              <span class="material-symbols-rounded">home</span>
+              <span class="material-symbols-rounded" aria-label="Home">home</span>
               <span class="menu-label">Home</span>
             </a>
           </li>
           <li class="menu-item">
             <a href="#" class="menu-link">
-              <span class="material-symbols-rounded">Menu</span>
+              <span class="material-symbols-rounded" aria-label="Menu">menu</span>
               <span class="menu-label">Menu</span>
             </a>
           </li>
           <li class="menu-item">
             <a href="#" class="menu-link">
-              <span class="material-symbols-rounded">notifications</span>
+              <span class="material-symbols-rounded" aria-label="Notifications">notifications</span>
               <span class="menu-label">Notifications</span>
             </a>
           </li>
           <li class="menu-item">
             <a href="#" class="menu-link">
-              <span class="material-symbols-rounded">star</span>
+              <span class="material-symbols-rounded" aria-label="Favourites">star</span>
               <span class="menu-label">Favourites</span>
             </a>
           </li>
           <li class="menu-item">
             <a href="products.php" class="menu-link">
-              <span class="material-symbols-rounded">storefront</span>
+              <span class="material-symbols-rounded" aria-label="Products">storefront</span>
               <span class="menu-label">Products</span>
             </a>
           </li>
           <li class="menu-item">
             <a href="#" class="menu-link">
-              <span class="material-symbols-rounded">group</span>
+              <span class="material-symbols-rounded" aria-label="Customers">group</span>
               <span class="menu-label">Customers</span>
             </a>
           </li>
           <li class="menu-item">
             <a href="#" class="menu-link">
-              <span class="material-symbols-rounded">settings</span>
+              <span class="material-symbols-rounded" aria-label="Settings">settings</span>
               <span class="menu-label">Settings</span>
             </a>
           </li>
           <li class="menu-item">
             <a href="assets/config/logOut.php" class="logout">
-              <span class="material-symbols-rounded">logout</span>
+              <span class="material-symbols-rounded" aria-label="Log Out">logout</span>
               <span class="menu-label">Log Out</span>
             </a>
           </li>
@@ -470,6 +470,50 @@ function updateTotal() {
   totalAmount = total.toFixed(2).replace(".", ",");
   document.querySelector(".cart-total-container span").innerText = "R$" + totalAmount;
 }
+
+// Adicione ao final do seu script atual
+
+function makePurchase() {
+  if (totalAmount === "0,00") {
+    alert("Seu carrinho está vazio!");
+    return;
+  }
+
+  if (!confirm("Deseja realmente finalizar a compra?")) return;
+
+  const cartProducts = document.getElementsByClassName("cart-product");
+  const vendaProdutos = [];
+
+  for (let i = 0; i < cartProducts.length; i++) {
+    const title = cartProducts[i].querySelector(".cart-product-title").innerText;
+    const priceText = cartProducts[i].querySelector(".cart-product-price").innerText.replace("R$", "").replace(",", ".");
+    const quantity = parseInt(cartProducts[i].querySelector(".product-qtd-input").value);
+    const preco = parseFloat(priceText);
+    const gasto = preco * 0.75;
+    const lucro = preco * 0.25;
+
+    vendaProdutos.push({
+      produto: title,
+      quantVendida: quantity,
+      preco: preco,
+      gasto: gasto,
+      lucro: lucro
+    });
+  }
+
+  const xhr = new XMLHttpRequest();
+  xhr.open("POST", "assets/config/salvar_venda.php", true);
+  xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+      alert("Compra finalizada com sucesso!");
+      document.getElementById("cart-table-body").innerHTML = "";
+      updateTotal();
+    }
+  };
+  xhr.send(JSON.stringify({ venda: vendaProdutos }));
+}
+
 
 
     </script>

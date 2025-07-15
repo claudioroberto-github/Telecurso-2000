@@ -66,7 +66,7 @@ if (isset($_POST['add_product'])) {
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Seus Produtos</title>
+  <title>Your Stock</title>
   <link rel="stylesheet" href="assets/css/home/home.css " />
   <link rel="stylesheet" href="assets/css/menu/styles-loja.css" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />

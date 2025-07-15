@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 14/07/2025 às 03:26
+-- Tempo de geração: 15/07/2025 às 16:20
 -- Versão do servidor: 10.4.32-MariaDB
--- Versão do PHP: 8.0.30
+-- Versão do PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -43,11 +43,23 @@ CREATE TABLE `cores` (
 CREATE TABLE `produtos` (
   `id_produto` int(11) NOT NULL,
   `nome_produto` varchar(100) NOT NULL,
-  `preco_produto` decimal(10,2) NOT NULL,
+  `preco_produto` double(10,2) NOT NULL,
   `classe_produto` varchar(100) NOT NULL,
   `img_produto` varchar(255) DEFAULT NULL,
   `id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Despejando dados para a tabela `produtos`
+--
+
+INSERT INTO `produtos` (`id_produto`, `nome_produto`, `preco_produto`, `classe_produto`, `img_produto`, `id`) VALUES
+(20, 'Suco', 8.99, 'Bebidas', 'assets/uploads/68762dda27650_6875c9922bb55_suco-laranja-freepik-800x533.webp', 38),
+(21, 'Almoço', 39.99, 'Prato Principal', 'assets/uploads/68762de918ba7_687462acd0815_home.png', 38),
+(22, 'Suco Prats', 9.99, 'Bebidas', 'assets/uploads/68762dfa4e5d3_6874eaaca231d_Suco_exemplo.jpg', 38),
+(23, 'caipirinha', 15.99, 'Bebidas alcoolicas', 'assets/uploads/68762f0adc747_caipirinhaExemplo.jpeg', 38),
+(24, 'Lanche', 19.99, 'Entrada', 'assets/uploads/68762fc47c587_lanches-gourmet.webp', 38),
+(25, 'Batata Frita', 9.99, 'Entrada', 'assets/uploads/68763023e5e81_images.jpeg', 38);
 
 -- --------------------------------------------------------
 
@@ -85,14 +97,15 @@ INSERT INTO `usuarios` (`id`, `user`, `company`, `cnpj`, `email`, `telephone`, `
 --
 
 CREATE TABLE `vendas_produtos` (
-  `pedido` int(255) NOT NULL,
+  `pedido` int(11) NOT NULL,
   `data_venda` datetime NOT NULL,
   `produtos` varchar(255) NOT NULL,
-  `quantVendida` int(7) NOT NULL,
-  `preço` double NOT NULL,
-  `gastos` int(11) NOT NULL,
-  `lucro` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `quantVendida` int(11) NOT NULL,
+  `preco` float NOT NULL,
+  `gasto` float NOT NULL,
+  `lucro` float NOT NULL,
+  `id_usuario` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Índices para tabelas despejadas
@@ -115,7 +128,8 @@ ALTER TABLE `usuarios`
 -- Índices de tabela `vendas_produtos`
 --
 ALTER TABLE `vendas_produtos`
-  ADD PRIMARY KEY (`pedido`);
+  ADD PRIMARY KEY (`pedido`),
+  ADD KEY `id_usuario` (`id_usuario`);
 
 --
 -- AUTO_INCREMENT para tabelas despejadas
@@ -125,7 +139,7 @@ ALTER TABLE `vendas_produtos`
 -- AUTO_INCREMENT de tabela `produtos`
 --
 ALTER TABLE `produtos`
-  MODIFY `id_produto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id_produto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT de tabela `usuarios`
@@ -137,7 +151,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de tabela `vendas_produtos`
 --
 ALTER TABLE `vendas_produtos`
-  MODIFY `pedido` int(255) NOT NULL AUTO_INCREMENT;
+  MODIFY `pedido` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Restrições para tabelas despejadas
@@ -148,6 +162,12 @@ ALTER TABLE `vendas_produtos`
 --
 ALTER TABLE `produtos`
   ADD CONSTRAINT `produtos_ibfk_1` FOREIGN KEY (`id`) REFERENCES `usuarios` (`id`);
+
+--
+-- Restrições para tabelas `vendas_produtos`
+--
+ALTER TABLE `vendas_produtos`
+  ADD CONSTRAINT `vendas_produtos_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
