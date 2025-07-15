@@ -1,137 +1,133 @@
-//abrir e fechar o carrinho de compras
 
-const caixa = document.querySelector('.cart-display');
-const cartButton = document.getElementById('cart-button');
-const closeCartButton = document.querySelector('.close-cart');
+document.addEventListener('DOMContentLoaded', function () {
+  const caixa = document.querySelector('.cart-display');
+  const cartButton = document.getElementById('cart-button');
+  const closeCartButton = document.querySelector('.close-cart');
 
-cartButton.addEventListener('click', () => {
-  caixa.style.display = 'flex';
+  if (cartButton && caixa) {
+    cartButton.addEventListener('click', () => {
+      caixa.style.display = 'flex';
+    });
+  }
+
+  if (closeCartButton && caixa) {
+    closeCartButton.addEventListener('click', () => {
+      caixa.style.display = 'none';
+    });
+  }
+
+  ready(); // Inicializa funções
 });
-closeCartButton.addEventListener('click', () => {
-  caixa.style.display = 'none';
-});
 
-// Funções para manipulação do carrinho de compras
-
-if (document.readyState == 'loading') {
-  document.addEventListener('DOMContentLoaded', ready)
-} else {
-  ready()
-}
-
-var totalAmount = "0,00"
+let totalAmount = "0,00";
 
 function ready() {
-  // Botão remover produto
-  const removeCartProductButtons = document.getElementsByClassName("remove-product-button")
-  for (var i = 0; i < removeCartProductButtons.length; i++) {
-    removeCartProductButtons[i].addEventListener("click", removeProduct)
+  const cartTableBody = document.getElementById("cart-table-body");
+
+  if (cartTableBody) {
+    cartTableBody.addEventListener("click", function (event) {
+      if (event.target.classList.contains("remove-product-button")) {
+        removeProduct(event);
+      }
+    });
+
+    cartTableBody.addEventListener("change", function (event) {
+      if (event.target.classList.contains("product-qtd-input")) {
+        checkIfInputIsNull(event);
+      }
+    });
   }
 
-  // Mudança valor dos inputs
-  const quantityInputs = document.getElementsByClassName("product-qtd-input")
-  for (var i = 0; i < quantityInputs.length; i++) {
-    quantityInputs[i].addEventListener("change", checkIfInputIsNull)
+  const addToCartButtons = document.getElementsByClassName("button-hover-background");
+  for (let i = 0; i < addToCartButtons.length; i++) {
+    addToCartButtons[i].addEventListener("click", addProductToCart);
   }
 
-  // Botão add produto ao carrinho
-  const addToCartButtons = document.getElementsByClassName("button-hover-background")
-  for (var i = 0; i < addToCartButtons.length; i++) {
-    addToCartButtons[i].addEventListener("click", addProductToCart)
+  const purchaseButton = document.querySelector(".purchase-button");
+  if (purchaseButton) {
+    purchaseButton.addEventListener("click", makePurchase);
   }
-
-  // Botão comprar
-  const purchaseButton = document.getElementsByClassName("purchase-button")[0]
-  purchaseButton.addEventListener("click", makePurchase)
 }
 
 function removeProduct(event) {
-  event.target.parentElement.parentElement.remove()
-  updateTotal()
+  const tr = event.target.closest("tr.cart-product");
+  if (tr) {
+    tr.remove();
+    updateTotal();
+  }
 }
 
 function checkIfInputIsNull(event) {
   if (event.target.value === "0") {
-    event.target.parentElement.parentElement.remove()
+    event.target.closest("tr.cart-product").remove();
   }
-
-  updateTotal()
+  updateTotal();
 }
 
 function addProductToCart(event) {
-  const button = event.target
-  const productInfos = button.parentElement.parentElement
-  const productImage = productInfos.getElementsByClassName("product-image")[0].src
-  const productName = productInfos.getElementsByClassName("product-title")[0].innerText
-  const productPrice = productInfos.getElementsByClassName("product-price")[0].innerText
+  const button = event.target.closest("button");
+  const productInfos = button.closest('.movie-product');
+  const productImage = productInfos.querySelector(".product-image").src;
+  const productName = productInfos.querySelector(".product-title").innerText;
+  const productPrice = productInfos.querySelector(".product-price").innerText;
 
-  const productsCartNames = document.getElementsByClassName("cart-product-title")
-  for (var i = 0; i < productsCartNames.length; i++) {
+  const productsCartNames = document.getElementsByClassName("cart-product-title");
+  for (let i = 0; i < productsCartNames.length; i++) {
     if (productsCartNames[i].innerText === productName) {
-      productsCartNames[i].parentElement.parentElement.getElementsByClassName("product-qtd-input")[0].value++
-      updateTotal()
-      return
+      const qtdInput = productsCartNames[i].closest("tr").querySelector(".product-qtd-input");
+      qtdInput.value = parseInt(qtdInput.value) + 1;
+      updateTotal();
+      return;
     }
   }
 
-  let newCartProduct = document.createElement("tr")
-  newCartProduct.classList.add("cart-product")
+  const newCartProduct = document.createElement("tr");
+  newCartProduct.classList.add("cart-product");
 
-  newCartProduct.innerHTML =
-    `
-      <td class="product-identification">
-        <img src="${productImage}" alt="${productName}" class="cart-product-image">
-        <strong class="cart-product-title">${productName}</strong>
-      </td>
-      <td>
-        <span class="cart-product-price">${productPrice}</span>
-      </td>
-      <td>
-        <div style="display: flex; align-items: center; gap: 10px; justify-content: center;">
-          <input type="number" value="1" min="0" class="product-qtd-input" style="width: 50px; padding: 4px 8px; border-radius: 6px; border: 1px solid #ccc;">
-          <button type="button" class="remove-product-button" style="padding: 4px 12px; border-radius: 6px; background: #f44336; color: #fff; border: none; cursor: pointer; font-size: 0.95rem;">Remover</button>
-        </div>
-      </td>
-    `
+  newCartProduct.innerHTML = `
+    <td class="product-identification">
+      <img src="${productImage}" alt="${productName}" class="cart-product-image" style="width: 40px; height: 40px; object-fit: cover; border-radius: 4px; margin-right: 8px;">
+      <strong class="cart-product-title">${productName}</strong>
+    </td>
+    <td style="text-align: center;">
+      <span class="cart-product-price">${productPrice}</span>
+    </td>
+    <td style="text-align: center;">
+      <input type="number" value="1" min="0" class="product-qtd-input" style="width: 50px; padding: 4px 8px; border-radius: 6px; border: 1px solid #ccc;">
+      <button type="button" class="remove-product-button" style="padding: 4px 12px; border-radius: 6px; background: #f44336; color: #fff; border: none; cursor: pointer; font-size: 0.95rem; margin-left: 6px;">Remover</button>
+    </td>
+  `;
 
-  const tableBody = document.querySelector(".cart-table tbody")
-  tableBody.append(newCartProduct)
-  updateTotal()
-
-  newCartProduct.getElementsByClassName("remove-product-button")[0].addEventListener("click", removeProduct)
-  newCartProduct.getElementsByClassName("product-qtd-input")[0].addEventListener("change", checkIfInputIsNull)
+  document.getElementById("cart-table-body").appendChild(newCartProduct);
+  updateTotal();
 }
 
 function makePurchase() {
   if (totalAmount === "0,00") {
-    alert("Seu carrinho está vazio!")
+    alert("Seu carrinho está vazio!");
   } else {
-    alert(
-      `
-        Obrigado pela sua compra!
-        Valor do pedido: R$${totalAmount}\n
-        Volte sempre :)
-      `
-    )
+    alert(`
+      Obrigado pela sua compra!
+      Valor do pedido: R$${totalAmount}
 
-    document.querySelector(".cart-table tbody").innerHTML = ""
-    updateTotal()
+      Volte sempre :)
+    `);
+    document.getElementById("cart-table-body").innerHTML = "";
+    updateTotal();
   }
 }
 
-// Atualizar o valor total do carrinho
 function updateTotal() {
-  const cartProducts = document.getElementsByClassName("cart-product")
-  totalAmount = 0
+  const cartProducts = document.getElementsByClassName("cart-product");
+  let total = 0;
 
-  for (var i = 0; i < cartProducts.length; i++) {
-    const productPrice = cartProducts[i].getElementsByClassName("cart-product-price")[0].innerText.replace("R$", "").replace(",", ".")
-    const productQuantity = cartProducts[i].getElementsByClassName("product-qtd-input")[0].value
-
-    totalAmount += productPrice * productQuantity
+  for (let i = 0; i < cartProducts.length; i++) {
+    const priceText = cartProducts[i].querySelector(".cart-product-price").innerText.replace("R$", "").replace(",", ".");
+    const quantity = cartProducts[i].querySelector(".product-qtd-input").value;
+    total += parseFloat(priceText) * parseInt(quantity);
   }
 
-  totalAmount = totalAmount.toFixed(2)
-  totalAmount = totalAmount.replace(".", ",")
-  document.querySelector(".cart-total-container span").innerText = "R$" + totalAmount
+  totalAmount = total.toFixed(2).replace(".", ",");
+  document.querySelector(".cart-total-container span").innerText = "R$" + totalAmount;
 }
+

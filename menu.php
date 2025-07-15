@@ -1,15 +1,20 @@
-<?php
+<?php 
+
 
 session_start();
 include_once('assets/config/config.php');
-if ((!isset($_SESSION['email']) == true) and (!isset($_SESSION['senha']) == true)) {
+
+if (!isset($_SESSION['user']) || !isset($_SESSION['id'])) {
+  session_unset();
+  session_destroy();
   header('Location: /Telecurso-2000/login.php');
-  unset($_SESSION['email']);
-  unset($_SESSION['passwords']);
+  exit();
 }
 $logged = $_SESSION['user'];
-
+$id_usuario = $_SESSION['id'];
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -122,65 +127,152 @@ $logged = $_SESSION['user'];
       </div>
 
 
-      <div class="produ+cts">
+      <style>
+        .products {
+          width: 100%;
+          min-height: 75vh;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: flex-start;
+          background: #f7f9fb;
+          padding: 48px 0 32px 0;
+          border-radius: 18px;
+          box-shadow: 0 2px 16px rgba(61,72,89,0.07);
+          margin-top: 80px;
+        }
+        .products-container {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 32px;
+          justify-content: center;
+          width: 100%;
+          max-width: 1200px;
+          margin: 0 auto;
+        }
+        .movie-product {
+          background: #fff;
+          border-radius: 16px;
+          box-shadow: 0 2px 12px rgba(61,72,89,0.10);
+          border: 1.5px solid #e6eaf0;
+          padding: 24px 18px 18px 18px;
+          min-width: 240px;
+          max-width: 260px;
+          margin-bottom: 18px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          transition: box-shadow 0.18s, transform 0.18s, border 0.18s;
+          position: relative;
+        }
+        .movie-product:hover {
+          box-shadow: 0 8px 32px rgba(61,72,89,0.18);
+          border: 1.5px solid #b6c2d1;
+          transform: translateY(-6px) scale(1.035);
+        }
+        .movie-product .product-title {
+          font-size: 1.18rem;
+          font-weight: 700;
+          color: #2d3542;
+          margin-bottom: 10px;
+          text-align: center;
+        }
+        .movie-product .product-image {
+          width: 100%;
+          max-width: 180px;
+          height: 140px;
+          object-fit: cover;
+          border-radius: 10px;
+          margin-bottom: 14px;
+          box-shadow: 0 1px 6px rgba(61,72,89,0.07);
+        }
+        .movie-product .product-price-container {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          width: 100%;
+          margin-top: 10px;
+        }
+        .movie-product .product-price {
+          font-size: 1.08rem;
+          font-weight: 600;
+          color: #3D4859;
+        }
+        .movie-product .button-hover-background {
+          background: #f4f7fa;
+          border: none;
+          border-radius: 8px;
+          padding: 8px 12px;
+          cursor: pointer;
+          transition: background 0.18s, color 0.18s;
+          color: #3D4859;
+          font-size: 1.2rem;
+          margin-left: 8px;
+        }
+        .movie-product .button-hover-background:hover {
+          background: #e0e7ef;
+          color: #222b38;
+        }
+        @media (max-width: 900px) {
+          .products-container {
+            max-width: 98vw;
+            gap: 18px;
+          }
+          .products {
+            padding: 32px 0 18px 0;
+          }
+        }
+        @media (max-width: 600px) {
+          .products {
+            padding: 16px 0 8px 0;
+            border-radius: 0;
+            margin-top: 60px;
+          }
+          .products-container {
+            gap: 10px;
+          }
+        }
+      </style>
+      <div class="products">
         <section class="container normal-section" style="display: flex; flex-direction: column; align-items: center;">
-          <h2 class="section-title" id="title-posters1">Posters</h2>
-          <div class="products-container" style="gap: 32px; justify-content: center;">
-            <div class="movie-product" style="box-shadow: 0 2px 12px rgba(0,0,0,0.08); border-radius: 12px; padding: 20px; background: #fff; min-width: 260px; max-width: 260px; margin-bottom: 16px;">
-              <strong class="product-title">Poster 1</strong>
-              <img src="assets/img/plate1.png" alt="Poster 1" class="product-image" style="border-radius: 8px; margin-bottom: 10px;">
-              <div class="product-price-container">
-                <span class="product-price">R$29,99</span>
-                <button type="button" class="button-hover-background"><span class="material-symbols-rounded">add_shopping_cart</span></button>
-              </div>
-            </div>
-            <div class="movie-product" style="box-shadow: 0 2px 12px rgba(0,0,0,0.08); border-radius: 12px; padding: 20px; background: #fff; min-width: 260px; max-width: 260px; margin-bottom: 16px;">
-              <strong class="product-title">Poster 2</strong>
-              <img src="assets/img/plate1.png" alt="Poster 2" class="product-image" style="border-radius: 8px; margin-bottom: 10px;">
-              <div class="product-price-container">
-                <span class="product-price">R$39,99</span>
-                <button type="button" class="button-hover-background"><span class="material-symbols-rounded">add_shopping_cart</span></button>
-              </div>
-            </div>
-            <div class="movie-product" style="box-shadow: 0 2px 12px rgba(0,0,0,0.08); border-radius: 12px; padding: 20px; background: #fff; min-width: 260px; max-width: 260px; margin-bottom: 16px;">
-              <strong class="product-title">Poster 3</strong>
-              <img src="assets/img/plate1.png" alt="Poster 3" class="product-image" style="border-radius: 8px; margin-bottom: 10px;">
-              <div class="product-price-container">
-                <span class="product-price">R$19,99</span>
-                <button type="button" class="button-hover-background"><span class="material-symbols-rounded">add_shopping_cart</span></button>
-              </div>
-            </div>
-            <div class="movie-product" style="box-shadow: 0 2px 12px rgba(0,0,0,0.08); border-radius: 12px; padding: 20px; background: #fff; min-width: 260px; max-width: 260px; margin-bottom: 16px;">
-              <strong class="product-title">Poster 4</strong>
-              <img src="assets/img/plate1.png" alt="Poster 4" class="product-image" style="border-radius: 8px; margin-bottom: 10px;">
-              <div class="product-price-container">
-                <span class="product-price">R$79,99</span>
-                <button type="button" class="button-hover-background"><span class="material-symbols-rounded">add_shopping_cart</span></button>
-              </div>
-            </div>
-          </div>
-        </section>
-        <section class="container normal-section">
-          <h2 class="section-title" id="title-posters2">Produtos</h2>
-          <div class="products-container" style="gap: 32px; justify-content: center;">
-            <div class="movie-product" style="box-shadow: 0 2px 12px rgba(0,0,0,0.08); border-radius: 12px; padding: 20px; background: #fff; min-width: 260px; max-width: 260px; margin-bottom: 16px;">
-              <strong class="product-title">Camiseta</strong>
-              <img src="assets/img/plate1.png" alt="Camiseta" class="product-image" style="border-radius: 8px; margin-bottom: 10px;">
-              <div class="product-price-container">
-                <span class="product-price">R$39,90</span>
-                <button type="button" class="button-hover-background"><span class="material-symbols-rounded">add_shopping_cart</span></button>
-              </div>
-            </div>
-            <div class="movie-product" style="box-shadow: 0 2px 12px rgba(0,0,0,0.08); border-radius: 12px; padding: 20px; background: #fff; min-width: 260px; max-width: 260px; margin-bottom: 16px;">
-              <strong class="product-title">Miniatura</strong>
-              <img src="assets/img/plate1.png" alt="Miniatura" class="product-image" style="border-radius: 8px; margin-bottom: 10px;">
-              <div class="product-price-container">
-                <span class="product-price">R$69,90</span>
-                <button type="button" class="button-hover-background"><span class="material-symbols-rounded">add_shopping_cart</span></button>
-              </div>
-            </div>
-          </div>
-        </section>
+  <h2 class="section-title" id="title-posters1">Produtos</h2>
+  <div class="products-container" style="gap: 32px; justify-content: center; flex-wrap: wrap;">
+    <?php
+
+    $query = "SELECT * FROM produtos WHERE id = ?";
+    $stmt = $conexao->prepare($query);
+    $stmt->bind_param("i", $id_usuario);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    while ($row = $result->fetch_assoc()):
+      $nome = htmlspecialchars($row['nome_produto']);
+      $preco = number_format($row['preco_produto'], 2, ',', '.');
+      $img = $row['img_produto'] ?? 'assets/img/placeholder.png';
+
+      // Caminho correto da imagem
+      if (strpos($img, 'uploads/') === 0) {
+        $img_path = "assets/" . $img;
+      } elseif (strpos($img, 'assets/') === 0) {
+        $img_path = $img;
+      } else {
+        $img_path = "assets/img/" . $img;
+      }
+    ?>
+      <div class="movie-product" style="box-shadow: 0 2px 12px rgba(0,0,0,0.08); border-radius: 12px; padding: 20px; background: #fff; min-width: 260px; max-width: 260px; margin-bottom: 16px;">
+        <strong class="product-title"><?= $nome ?></strong>
+        <img src="<?= $img_path ?>" alt="<?= $nome ?>" class="product-image" style="border-radius: 8px; margin-bottom: 10px; max-height: 160px; object-fit: cover;">
+        <div class="product-price-container">
+          <span class="product-price">R$<?= $preco ?></span>
+          <button type="button" class="button-hover-background">
+            <span class="material-symbols-rounded">add_shopping_cart</span>
+          </button>
+        </div>
+      </div>
+    <?php endwhile; ?>
+  </div>
+</section>
+
       </div>
       <div class="cart-display" style="display: none; justify-content: center; align-items: center; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.18); z-index: 1000; margin: 0;">
         <section class="container normal-section" style="box-shadow: 0 4px 24px rgba(0,0,0,0.18); border-radius: 18px; background: #fff; padding: 32px 24px; display: flex; flex-direction: column; width: 90vw; max-width: 600px; min-width: 260px; max-height: 80vh; overflow-y: auto; align-items: center;">
@@ -198,7 +290,7 @@ $logged = $_SESSION['user'];
                 <th class="table-head-item third-col" style="padding: 12px 8px; border-bottom: 2px solid #ececec; text-align: center; font-weight: 600;">Quantidade</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody id="cart-table-body">
             </tbody>
             <tfoot>
               <tr>
@@ -235,6 +327,150 @@ $logged = $_SESSION['user'];
     <script src="assets/js/home/home.js"></script>
 
     <script>
+      // Fecha o carrinho ao clicar no botão de fechar
+      document.addEventListener('DOMContentLoaded', function() {
+        var closeBtn = document.querySelector('.close-cart');
+        var cartDisplay = document.querySelector('.cart-display');
+        if (closeBtn && cartDisplay) {
+          closeBtn.addEventListener('click', function() {
+            cartDisplay.style.display = 'none';
+          });
+        }
+      });
+
+      
+document.addEventListener('DOMContentLoaded', function () {
+  const caixa = document.querySelector('.cart-display');
+  const cartButton = document.getElementById('cart-button');
+  const closeCartButton = document.querySelector('.close-cart');
+
+  if (cartButton && caixa) {
+    cartButton.addEventListener('click', () => {
+      caixa.style.display = 'flex';
+    });
+  }
+
+  if (closeCartButton && caixa) {
+    closeCartButton.addEventListener('click', () => {
+      caixa.style.display = 'none';
+    });
+  }
+
+  ready(); // Inicializa funções
+});
+
+let totalAmount = "0,00";
+
+function ready() {
+  const cartTableBody = document.getElementById("cart-table-body");
+
+  if (cartTableBody) {
+    cartTableBody.addEventListener("click", function (event) {
+      if (event.target.classList.contains("remove-product-button")) {
+        removeProduct(event);
+      }
+    });
+
+    cartTableBody.addEventListener("change", function (event) {
+      if (event.target.classList.contains("product-qtd-input")) {
+        checkIfInputIsNull(event);
+      }
+    });
+  }
+
+  const addToCartButtons = document.getElementsByClassName("button-hover-background");
+  for (let i = 0; i < addToCartButtons.length; i++) {
+    addToCartButtons[i].addEventListener("click", addProductToCart);
+  }
+
+  const purchaseButton = document.querySelector(".purchase-button");
+  if (purchaseButton) {
+    purchaseButton.addEventListener("click", makePurchase);
+  }
+}
+
+function removeProduct(event) {
+  const tr = event.target.closest("tr.cart-product");
+  if (tr) {
+    tr.remove();
+    updateTotal();
+  }
+}
+
+function checkIfInputIsNull(event) {
+  if (event.target.value === "0") {
+    event.target.closest("tr.cart-product").remove();
+  }
+  updateTotal();
+}
+
+function addProductToCart(event) {
+  const button = event.target.closest("button");
+  const productInfos = button.closest('.movie-product');
+  const productImage = productInfos.querySelector(".product-image").src;
+  const productName = productInfos.querySelector(".product-title").innerText;
+  const productPrice = productInfos.querySelector(".product-price").innerText;
+
+  const productsCartNames = document.getElementsByClassName("cart-product-title");
+  for (let i = 0; i < productsCartNames.length; i++) {
+    if (productsCartNames[i].innerText === productName) {
+      const qtdInput = productsCartNames[i].closest("tr").querySelector(".product-qtd-input");
+      qtdInput.value = parseInt(qtdInput.value) + 1;
+      updateTotal();
+      return;
+    }
+  }
+
+  const newCartProduct = document.createElement("tr");
+  newCartProduct.classList.add("cart-product");
+
+  newCartProduct.innerHTML = `
+    <td class="product-identification">
+      <img src="${productImage}" alt="${productName}" class="cart-product-image" style="width: 40px; height: 40px; object-fit: cover; border-radius: 4px; margin-right: 8px;">
+      <strong class="cart-product-title">${productName}</strong>
+    </td>
+    <td style="text-align: center;">
+      <span class="cart-product-price">${productPrice}</span>
+    </td>
+    <td style="text-align: center;">
+      <input type="number" value="1" min="0" class="product-qtd-input" style="width: 50px; padding: 4px 8px; border-radius: 6px; border: 1px solid #ccc;">
+      <button type="button" class="remove-product-button" style="padding: 4px 12px; border-radius: 6px; background: #f44336; color: #fff; border: none; cursor: pointer; font-size: 0.95rem; margin-left: 6px;">Remover</button>
+    </td>
+  `;
+
+  document.getElementById("cart-table-body").appendChild(newCartProduct);
+  updateTotal();
+}
+
+function makePurchase() {
+  if (totalAmount === "0,00") {
+    alert("Seu carrinho está vazio!");
+  } else {
+    alert(`
+      Obrigado pela sua compra!
+      Valor do pedido: R$${totalAmount}
+
+      Volte sempre :)
+    `);
+    document.getElementById("cart-table-body").innerHTML = "";
+    updateTotal();
+  }
+}
+
+function updateTotal() {
+  const cartProducts = document.getElementsByClassName("cart-product");
+  let total = 0;
+
+  for (let i = 0; i < cartProducts.length; i++) {
+    const priceText = cartProducts[i].querySelector(".cart-product-price").innerText.replace("R$", "").replace(",", ".");
+    const quantity = cartProducts[i].querySelector(".product-qtd-input").value;
+    total += parseFloat(priceText) * parseInt(quantity);
+  }
+
+  totalAmount = total.toFixed(2).replace(".", ",");
+  document.querySelector(".cart-total-container span").innerText = "R$" + totalAmount;
+}
+
 
     </script>
 </body>

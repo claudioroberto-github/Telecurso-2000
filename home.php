@@ -7,7 +7,7 @@ if ((!isset($_SESSION['email']) == true) and (!isset($_SESSION['senha']) == true
   unset($_SESSION['email']);
   unset($_SESSION['passwords']);
 }
-$logged = $_SESSION['user'];
+$logged = isset($_SESSION['user']) ? $_SESSION['user'] : '';
 ?>
 
 
@@ -18,7 +18,7 @@ $logged = $_SESSION['user'];
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sidebar Menu | CodingNepal</title>
+  <title>Bem-vindo <?php if (isset($_SESSION['user'])) echo '|' . htmlspecialchars($_SESSION['user']); ?></title>
   <link rel="stylesheet" href="assets/css/home/home.css" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
 </head>
@@ -40,7 +40,7 @@ $logged = $_SESSION['user'];
         </button>
       </div>
       <div class="sidebar-content">
-        <?php echo "<p class=" . "user-name" . ">Welcome<b>$logged</b></p>"; ?>
+        <p class="user-name">Welcome <b><?php echo htmlspecialchars($logged); ?></b></p>
         <!-- Search Form -->
         <form action="#" class="search-form">
           <span class="material-symbols-rounded">search</span>
@@ -209,38 +209,6 @@ $logged = $_SESSION['user'];
               <td>R$ 25,00</td>
               <td>R$ 18,75</td>
               <td>R$ 6,25</td>
-            </tr>
-            <tr>
-              <td><a href="#">2</a></td>
-              <td>Bebida</td>
-              <td>15</td>
-              <td>R$ 30,00</td>
-              <td>R$ 22,50</td>
-              <td>R$ 7,50</td>
-            </tr>
-            <tr>
-              <td><a href="#">3</a></td>
-              <td>Doces</td>
-              <td>10</td>
-              <td>R$ 20,00</td>
-              <td>R$ 15,00</td>
-              <td>R$ 5,00</td>
-            </tr>
-            <tr>
-              <td><a href="#">4</a></td>
-              <td>Salada</td>
-              <td>5</td>
-              <td>R$ 15,00</td>
-              <td>R$ 11,25</td>
-              <td>R$ 3,75</td>
-            </tr> 
-            <tr>
-              <td><a href="#">5</a></td>
-              <td>Refrigerante</td>
-              <td>20</td>
-              <td>R$ 40,00</td>
-              <td>R$ 30,00</td>
-              <td>R$ 10,00</td>
             </tr>
           </tbody>
           <tfoot>

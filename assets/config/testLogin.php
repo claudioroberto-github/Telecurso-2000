@@ -1,16 +1,17 @@
 <?php
 session_start();
 
-if (isset($_POST['submit-login']) && !empty($_POST['email']) && !empty($_POST['passwords'])) {
+if (isset($_POST['submit-login']) && !empty($_POST['email']) && !empty($_POST['passwords']) && !empty($_POST['user'])) {
     include_once('config.php');
 
+    $user = trim($_POST['user']);
     $email = trim($_POST['email']);
     $password = trim($_POST['passwords']);
 
     // Usa prepared statement para evitar SQL Injection
-    $sql = "SELECT * FROM usuarios WHERE email = ? AND passwords = ?";
+    $sql = "SELECT * FROM usuarios WHERE email = ? AND passwords = ? AND user = ?";
     $stmt = $conexao->prepare($sql);
-    $stmt->bind_param("ss", $email, $password);
+    $stmt->bind_param("sss", $email, $password, $user);
     $stmt->execute();
     $result = $stmt->get_result();
 
@@ -20,7 +21,7 @@ if (isset($_POST['submit-login']) && !empty($_POST['email']) && !empty($_POST['p
 
         // Armazena informações na sessão
         $_SESSION['id'] = $dados['id'];           // chave primária
-        $_SESSION['user'] = $dados['nome'];       // nome do usuário
+        $_SESSION['user'] = $dados['user'];       // user do banco (login)
         $_SESSION['email'] = $dados['email'];     // email (opcional)
 
         header('Location: /Telecurso-2000/home.php');
