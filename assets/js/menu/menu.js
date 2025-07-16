@@ -1,4 +1,3 @@
-
 document.addEventListener('DOMContentLoaded', function () {
   const caixa = document.querySelector('.cart-display');
   const cartButton = document.getElementById('cart-button');
@@ -45,6 +44,7 @@ function ready() {
 
   const purchaseButton = document.querySelector(".purchase-button");
   if (purchaseButton) {
+    alert("makePurchase foi chamada!");
     purchaseButton.addEventListener("click", makePurchase);
   }
 }
@@ -103,19 +103,56 @@ function addProductToCart(event) {
 }
 
 function makePurchase() {
-  if (totalAmount === "0,00") {
+  const cartProducts = document.querySelectorAll(".cart-product");
+  if (cartProducts.length === 0) {
     alert("Seu carrinho está vazio!");
-  } else {
-    alert(`
-      Obrigado pela sua compra!
-      Valor do pedido: R$${totalAmount}
-
-      Volte sempre :)
-    `);
-    document.getElementById("cart-table-body").innerHTML = "";
-    updateTotal();
+    return;
   }
+
+  let vendaData = [];
+
+  cartProducts.forEach((productRow) => {
+    const produto = productRow.querySelector(".cart-product-title").innerText;
+    const preco = parseFloat(productRow.querySelector(".cart-product-price").innerText.replace("R$", "").replace(",", "."));
+    const quantidade = parseInt(productRow.querySelector(".product-qtd-input").value);
+
+    const gasto = preco * 0.75;
+    const lucro = preco * 0.25;
+
+    vendaData.push({
+      produto: produto,
+      preco: preco,
+      quantVendida: quantidade,
+      gasto: gasto,
+      lucro: lucro
+    });
+  });
+
+  fetch("/Telecurso-2000/assets/config/salvar_venda.php", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ venda: vendaData })
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.sucesso) {
+      alert("Compra finalizada com sucesso!");
+      document.getElementById("cart-table-body").innerHTML = "";
+      updateTotal();
+    } else {
+      alert("Erro ao salvar alguns itens.");
+      console.error(data.erros);
+    }
+  })
+  .catch(error => {
+    alert("Erro ao enviar a venda para o servidor.");
+    console.error("Erro na requisição:", error);
+  });
 }
+
+
 
 function updateTotal() {
   const cartProducts = document.getElementsByClassName("cart-product");

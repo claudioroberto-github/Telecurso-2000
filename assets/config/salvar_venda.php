@@ -2,6 +2,11 @@
 session_start();
 include_once('assets/config/config.php');
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+
 if (!isset($_SESSION['id'])) {
     http_response_code(401);
     echo json_encode(["erro" => "Usuário não autenticado."]);
