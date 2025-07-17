@@ -132,7 +132,7 @@ if (isset($_POST['add_product'])) {
             </a>
           </li>
           <li class="menu-item">
-            <a href="#" class="menu-link">
+            <a href="settings.php" class="menu-link">
               <span class="material-symbols-rounded">settings</span>
               <span class="menu-label">Settings</span>
             </a>

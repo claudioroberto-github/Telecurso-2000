@@ -44,7 +44,6 @@ function ready() {
 
   const purchaseButton = document.querySelector(".purchase-button");
   if (purchaseButton) {
-    alert("makePurchase foi chamada!");
     purchaseButton.addEventListener("click", makePurchase);
   }
 }

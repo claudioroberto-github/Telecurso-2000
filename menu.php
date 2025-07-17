@@ -89,7 +89,7 @@ $id_usuario = $_SESSION['id'];
             </a>
           </li>
           <li class="menu-item">
-            <a href="#" class="menu-link">
+            <a href="settings.php" class="menu-link">
               <span class="material-symbols-rounded" aria-label="Settings">settings</span>
               <span class="menu-label">Settings</span>
             </a>
@@ -141,8 +141,8 @@ $id_usuario = $_SESSION['id'];
           margin-top: 80px;
         }
         .products-container {
-          display: flex;
-          flex-wrap: wrap;
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
           gap: 32px;
           justify-content: center;
           width: 100%;
@@ -151,18 +151,17 @@ $id_usuario = $_SESSION['id'];
         }
         .movie-product {
           background: #fff;
-          border-radius: 16px;
-          box-shadow: 0 2px 12px rgba(61,72,89,0.10);
-          border: 1.5px solid #e6eaf0;
-          padding: 24px 18px 18px 18px;
-          min-width: 240px;
-          max-width: 260px;
+          border-radius: 12px;
+          box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+          padding: 16px;
+          width: 100%;
+          max-width: 220px;
+          min-width: 0;
+          text-align: center;
           margin-bottom: 18px;
           display: flex;
           flex-direction: column;
           align-items: center;
-          transition: box-shadow 0.18s, transform 0.18s, border 0.18s;
-          position: relative;
         }
         .movie-product:hover {
           box-shadow: 0 8px 32px rgba(61,72,89,0.18);
@@ -170,32 +169,28 @@ $id_usuario = $_SESSION['id'];
           transform: translateY(-6px) scale(1.035);
         }
         .movie-product .product-title {
+          margin: 10px 0 5px;
           font-size: 1.18rem;
           font-weight: 700;
-          color: #2d3542;
-          margin-bottom: 10px;
+          color: #222b38;
           text-align: center;
         }
         .movie-product .product-image {
-          width: 100%;
-          max-width: 180px;
-          height: 140px;
+          max-width: 100%;
+          height: 120px;
           object-fit: cover;
-          border-radius: 10px;
-          margin-bottom: 14px;
-          box-shadow: 0 1px 6px rgba(61,72,89,0.07);
-        }
-        .movie-product .product-price-container {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          width: 100%;
-          margin-top: 10px;
+          border-radius: 8px;
+          margin-bottom: 10px;
         }
         .movie-product .product-price {
+          margin: 0;
+          color: #444;
           font-size: 1.08rem;
           font-weight: 600;
-          color: #3D4859;
+        }
+        .movie-product small {
+          color: #777;
+          margin-bottom: 8px;
         }
         .movie-product .button-hover-background {
           background: #f4f7fa;
@@ -211,6 +206,21 @@ $id_usuario = $_SESSION['id'];
         .movie-product .button-hover-background:hover {
           background: #e0e7ef;
           color: #222b38;
+        }
+        @media (max-width: 1100px) {
+          .products-container {
+            grid-template-columns: repeat(3, 1fr);
+          }
+        }
+        @media (max-width: 800px) {
+          .products-container {
+            grid-template-columns: repeat(2, 1fr);
+          }
+        }
+        @media (max-width: 500px) {
+          .products-container {
+            grid-template-columns: 1fr;
+          }
         }
         @media (max-width: 900px) {
           .products-container {
@@ -335,6 +345,5 @@ $id_usuario = $_SESSION['id'];
 });
 
 </script>
->>>>>>> e6b6af8 (consegui arrumar o menu de vendas com o banco de dados)
 </body>
 </html>

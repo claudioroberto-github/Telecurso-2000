@@ -18,7 +18,7 @@ $logged = isset($_SESSION['user']) ? $_SESSION['user'] : '';
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bem-vindo <?php if (isset($_SESSION['user'])) echo '|' . htmlspecialchars($_SESSION['user']); ?></title>
+  <title>Bem-vindo <?php if (isset($_SESSION['user'])) echo '| ' . htmlspecialchars($_SESSION['user']); ?></title>
   <link rel="stylesheet" href="assets/css/home/home.css" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
 </head>
@@ -86,7 +86,7 @@ $logged = isset($_SESSION['user']) ? $_SESSION['user'] : '';
             </a>
           </li>
           <li class="menu-item">
-            <a href="#" class="menu-link">
+            <a href="settings.php" class="menu-link">
               <span class="material-symbols-rounded">settings</span>
               <span class="menu-label">Settings</span>
             </a>
