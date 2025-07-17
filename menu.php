@@ -25,6 +25,22 @@ $id_usuario = $_SESSION['id'];
   <title>Sidebar Menu | CodingNepal</title>
   <link rel="stylesheet" href="assets/css/home/home.css " />
   <link rel="stylesheet" href="assets/css/menu/styles-loja.css" />
+  <?php
+// Buscar todos os produtos do usuário e organizar por classe_produto
+$query = "SELECT * FROM produtos WHERE id = ?";
+$stmt = $conexao->prepare($query);
+$stmt->bind_param("i", $id_usuario);
+$stmt->execute();
+$result = $stmt->get_result();
+$produtos_por_classe = [];
+while ($row = $result->fetch_assoc()) {
+  $classe = strtolower(trim($row['classe_produto']));
+  if (!isset($produtos_por_classe[$classe])) {
+    $produtos_por_classe[$classe] = [];
+  }
+  $produtos_por_classe[$classe][] = $row;
+}
+?>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
 </head>
 
@@ -121,8 +137,22 @@ $id_usuario = $_SESSION['id'];
         <button class="cart-button" id="cart-button">
           <span class="material-symbols-rounded">shopping_cart</span>
         </button>
-        <a href="#title-posters1" style="margin-left: 20px;">comidas</a>
-        <a href="#title-posters2" style="margin-left: 20px;">bebidas</a>
+        <?php
+        // Gera os links de navegação para cada grupo de produtos na ordem desejada
+        $ordem = [
+          'entrada',
+          'prato principal',
+          'sobremesa',
+          'bebidas',
+          'bebidas alcoolicas',
+        ];
+        foreach ($ordem as $classe) {
+          if (!isset($produtos_por_classe[$classe])) continue;
+          $id = htmlspecialchars($classe);
+          $label = ucfirst($classe);
+          echo '<a href="#' . $id . '" style="margin-left: 20px;">' . $label . '</a>';
+        }
+        ?>
       </div>
 
 
@@ -154,8 +184,7 @@ $id_usuario = $_SESSION['id'];
           border-radius: 12px;
           box-shadow: 0 2px 10px rgba(0,0,0,0.1);
           padding: 16px;
-          width: 100%;
-          max-width: 220px;
+          width: 220px;
           min-width: 0;
           text-align: center;
           margin-bottom: 18px;
@@ -245,40 +274,68 @@ $id_usuario = $_SESSION['id'];
       <div class="products">
         <section class="container normal-section" style="display: flex; flex-direction: column; align-items: center;">
   <h2 class="section-title" id="title-posters1">Produtos</h2>
-  <div class="products-container" style="gap: 32px; justify-content: center; flex-wrap: wrap;">
+  <div class="products-container" style="display: flex; flex-direction: column; gap: 32px; width: 100%; align-items: stretch;">
     <?php
 
+    // Buscar todos os produtos do usuário
     $query = "SELECT * FROM produtos WHERE id = ?";
     $stmt = $conexao->prepare($query);
     $stmt->bind_param("i", $id_usuario);
     $stmt->execute();
     $result = $stmt->get_result();
 
-    while ($row = $result->fetch_assoc()):
-      $nome = htmlspecialchars($row['nome_produto']);
-      $preco = number_format($row['preco_produto'], 2, ',', '.');
-      $img = $row['img_produto'] ?? 'assets/img/placeholder.png';
-
-      // Caminho correto da imagem
-      if (strpos($img, 'uploads/') === 0) {
-        $img_path = "assets/" . $img;
-      } elseif (strpos($img, 'assets/') === 0) {
-        $img_path = $img;
-      } else {
-        $img_path = "assets/img/" . $img;
+    // Organizar produtos por classe_produto
+    $produtos_por_classe = [];
+    while ($row = $result->fetch_assoc()) {
+      $classe = strtolower(trim($row['classe_produto']));
+      if (!isset($produtos_por_classe[$classe])) {
+        $produtos_por_classe[$classe] = [];
       }
+      $produtos_por_classe[$classe][] = $row;
+    }
     ?>
-      <div class="movie-product" style="box-shadow: 0 2px 12px rgba(0,0,0,0.08); border-radius: 12px; padding: 20px; background: #fff; min-width: 260px; max-width: 260px; margin-bottom: 16px;">
-        <strong class="product-title"><?= $nome ?></strong>
-        <img src="<?= $img_path ?>" alt="<?= $nome ?>" class="product-image" style="border-radius: 8px; margin-bottom: 10px; max-height: 160px; object-fit: cover;">
-        <div class="product-price-container">
-          <span class="product-price">R$<?= $preco ?></span>
-          <button type="button" class="button-hover-background">
-            <span class="material-symbols-rounded">add_shopping_cart</span>
-          </button>
+    <?php
+      $ordem = [
+        'entrada',
+        'prato principal',
+        'sobremesa',
+        'bebidas',
+        'bebidas alcoolicas',
+      ];
+      foreach ($ordem as $classe) {
+        if (!isset($produtos_por_classe[$classe])) continue;
+        $produtos = $produtos_por_classe[$classe];
+    ?>
+      <div class="classe-produto" id="<?= htmlspecialchars($classe) ?>" style="width:100%; margin-bottom: 32px; display: flex; flex-direction: column; align-items: stretch;">
+        <h3 style="margin-bottom: 18px; color: #3D4859; text-transform: capitalize; border-bottom: 1.5px solid #e6eaf0; padding-bottom: 6px; width: 100%;"> <?= htmlspecialchars($classe) ?> </h3>
+        <div class="products-list" style="display: flex; flex-direction: column; gap: 24px; width: 100%; align-items: stretch;">
+          <?php foreach ($produtos as $row):
+            $nome = htmlspecialchars($row['nome_produto']);
+            $preco = number_format($row['preco_produto'], 2, ',', '.');
+            $img = $row['img_produto'] ?? 'assets/img/placeholder.png';
+            if (strpos($img, 'uploads/') === 0) {
+              $img_path = "assets/" . $img;
+            } elseif (strpos($img, 'assets/') === 0) {
+              $img_path = $img;
+            } else {
+              $img_path = "assets/img/" . $img;
+            }
+          ?>
+            <div class="movie-product" style="box-shadow: 0 2px 12px rgba(0,0,0,0.08); border-radius: 12px; padding: 20px; background: #fff; min-width: 260px; max-width: 540px; margin-bottom: 0; width: 100%; display: flex; flex-direction: row; align-items: center; gap: 18px; align-self: center;">
+              <img src="<?= $img_path ?>" alt="<?= $nome ?>" class="product-image" style="border-radius: 8px; max-width: 90px; max-height: 90px; object-fit: cover; margin-bottom: 0;">
+              <div style="flex:1; display: flex; flex-direction: column; align-items: flex-start;">
+                <strong class="product-title" style="margin-bottom: 2px; text-align: left; font-size: 1.1rem; color: #222b38;"><?= $nome ?></strong>
+                <small style="color: #777; margin-bottom: 6px; text-align: left;"><?= htmlspecialchars($row['classe_produto']) ?></small>
+                <span class="product-price" style="color: #3D4859; font-weight: 600;">R$<?= $preco ?></span>
+              </div>
+              <button type="button" class="button-hover-background" style="margin-left: auto;">
+                <span class="material-symbols-rounded">add_shopping_cart</span>
+              </button>
+            </div>
+          <?php endforeach; ?>
         </div>
       </div>
-    <?php endwhile; ?>
+    <?php } ?>
   </div>
 </section>
 
