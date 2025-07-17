@@ -83,7 +83,6 @@ if (isset($_POST['add_product'])) {
     <aside class="sidebar collapsed">
       <!-- Sidebar header -->
       <div class="sidebar-header">
-        <img src="logo.png" alt="CodingNepal" class="header-logo" />
         <button class="sidebar-toggle">
           <span class="material-symbols-rounded">chevron_left</span>
         </button>
@@ -104,8 +103,14 @@ if (isset($_POST['add_product'])) {
           </li>
           <li class="menu-item">
             <a href="menu.php" class="menu-link">
-              <span class="material-symbols-rounded">Menu</span>
+              <span class="material-symbols-rounded">room_service</span>
               <span class="menu-label">Menu</span>
+            </a>
+          </li>
+          <li class="menu-item">
+            <a href="products.php" class="menu-link">
+              <span class="material-symbols-rounded" aria-label="Products">storefront</span>
+              <span class="menu-label">Products</span>
             </a>
           </li>
           <li class="menu-item">
@@ -118,12 +123,6 @@ if (isset($_POST['add_product'])) {
             <a href="menu.php" class="menu-link">
               <span class="material-symbols-rounded">star</span>
               <span class="menu-label">Favourites</span>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="#" class="menu-link">
-              <span class="material-symbols-rounded">storefront</span>
-              <span class="menu-label">Products</span>
             </a>
           </li>
           <li class="menu-item">

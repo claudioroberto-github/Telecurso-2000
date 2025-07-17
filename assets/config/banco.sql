@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 15/07/2025 às 16:20
+-- Tempo de geração: 17/07/2025 às 02:04
 -- Versão do servidor: 10.4.32-MariaDB
--- Versão do PHP: 8.2.12
+-- Versão do PHP: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -58,8 +58,10 @@ INSERT INTO `produtos` (`id_produto`, `nome_produto`, `preco_produto`, `classe_p
 (21, 'Almoço', 39.99, 'Prato Principal', 'assets/uploads/68762de918ba7_687462acd0815_home.png', 38),
 (22, 'Suco Prats', 9.99, 'Bebidas', 'assets/uploads/68762dfa4e5d3_6874eaaca231d_Suco_exemplo.jpg', 38),
 (23, 'caipirinha', 15.99, 'Bebidas alcoolicas', 'assets/uploads/68762f0adc747_caipirinhaExemplo.jpeg', 38),
-(24, 'Lanche', 19.99, 'Entrada', 'assets/uploads/68762fc47c587_lanches-gourmet.webp', 38),
-(25, 'Batata Frita', 9.99, 'Entrada', 'assets/uploads/68763023e5e81_images.jpeg', 38);
+(24, 'Lanche', 19.99, 'Prato Principal', 'assets/uploads/68762fc47c587_lanches-gourmet.webp', 38),
+(25, 'Batata Frita', 9.99, 'Entrada', 'assets/uploads/68763023e5e81_images.jpeg', 38),
+(26, 'Cerveja', 16.99, 'Bebidas alcoolicas', 'assets/uploads/68781a2b19bcc_cerveja.jpg', 38),
+(27, 'Patês com Torradas', 11.99, 'Entrada', 'assets/uploads/68781a73989db_patês com torradas.jpg', 38);
 
 -- --------------------------------------------------------
 
@@ -108,6 +110,25 @@ CREATE TABLE `vendas_produtos` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
+-- Despejando dados para a tabela `vendas_produtos`
+--
+
+INSERT INTO `vendas_produtos` (`pedido`, `data_venda`, `produtos`, `quantVendida`, `preco`, `gasto`, `lucro`, `id_usuario`) VALUES
+(6878174, '2025-07-16 18:19:09', 'Suco', 4, 8.99, 6.7425, 2.2475, 38),
+(6878174, '2025-07-16 18:19:09', 'Batata Frita', 3, 9.99, 7.4925, 2.4975, 38),
+(687817758, '2025-07-16 18:19:49', 'Lanche', 4, 19.99, 14.9925, 4.9975, 38),
+(687817758, '2025-07-16 18:19:49', 'caipirinha', 4, 15.99, 11.9925, 3.9975, 38),
+(687817758, '2025-07-16 18:19:49', 'Batata Frita', 3, 9.99, 7.4925, 2.4975, 38),
+(687817758, '2025-07-16 18:19:49', 'Suco Prats', 3, 9.99, 7.4925, 2.4975, 38),
+(687817758, '2025-07-16 18:19:49', 'Almoço', 2, 39.99, 29.9925, 9.9975, 38),
+(687817758, '2025-07-16 18:19:49', 'Suco', 3, 8.99, 6.7425, 2.2475, 38),
+(6878178, '2025-07-16 18:20:13', 'Suco', 1, 8.99, 6.7425, 2.2475, 38),
+(68781, '2025-07-16 18:41:27', 'Almoço', 4, 39.99, 29.9925, 9.9975, 38),
+(68781, '2025-07-16 18:41:27', 'Patês com Torradas', 3, 11.99, 8.9925, 2.9975, 38),
+(68781, '2025-07-16 18:41:27', 'Cerveja', 5, 16.99, 12.7425, 4.2475, 38),
+(2147483647, '2025-07-16 18:49:58', 'Cerveja', 3, 16.99, 12.7425, 4.2475, 38);
+
+--
 -- Índices para tabelas despejadas
 --
 
@@ -125,13 +146,6 @@ ALTER TABLE `usuarios`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices de tabela `vendas_produtos`
---
-ALTER TABLE `vendas_produtos`
-  ADD PRIMARY KEY (`pedido`),
-  ADD KEY `id_usuario` (`id_usuario`);
-
---
 -- AUTO_INCREMENT para tabelas despejadas
 --
 
@@ -139,19 +153,13 @@ ALTER TABLE `vendas_produtos`
 -- AUTO_INCREMENT de tabela `produtos`
 --
 ALTER TABLE `produtos`
-  MODIFY `id_produto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id_produto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT de tabela `usuarios`
 --
 ALTER TABLE `usuarios`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
-
---
--- AUTO_INCREMENT de tabela `vendas_produtos`
---
-ALTER TABLE `vendas_produtos`
-  MODIFY `pedido` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Restrições para tabelas despejadas
@@ -162,12 +170,6 @@ ALTER TABLE `vendas_produtos`
 --
 ALTER TABLE `produtos`
   ADD CONSTRAINT `produtos_ibfk_1` FOREIGN KEY (`id`) REFERENCES `usuarios` (`id`);
-
---
--- Restrições para tabelas `vendas_produtos`
---
-ALTER TABLE `vendas_produtos`
-  ADD CONSTRAINT `vendas_produtos_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

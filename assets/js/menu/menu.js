@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  ready(); // Inicializa funções
+  ready();
 });
 
 let totalAmount = "0,00";
@@ -58,7 +58,7 @@ function removeProduct(event) {
 }
 
 function checkIfInputIsNull(event) {
-  if (event.target.value === "0") {
+  if (parseInt(event.target.value) <= 0) {
     event.target.closest("tr.cart-product").remove();
   }
   updateTotal();
@@ -101,59 +101,6 @@ function addProductToCart(event) {
   document.getElementById("cart-table-body").appendChild(newCartProduct);
   updateTotal();
 }
-
-function makePurchase() {
-  const cartProducts = document.querySelectorAll(".cart-product");
-  if (cartProducts.length === 0) {
-    alert("Seu carrinho está vazio!");
-    return;
-  }
-
-  let vendaData = [];
-
-  cartProducts.forEach((productRow) => {
-    const produto = productRow.querySelector(".cart-product-title").innerText;
-    const preco = parseFloat(productRow.querySelector(".cart-product-price").innerText.replace("R$", "").replace(",", "."));
-    const quantidade = parseInt(productRow.querySelector(".product-qtd-input").value);
-
-    const gasto = preco * 0.75;
-    const lucro = preco * 0.25;
-
-    vendaData.push({
-      produto: produto,
-      preco: preco,
-      quantVendida: quantidade,
-      gasto: gasto,
-      lucro: lucro
-    });
-  });
-
-  fetch("/Telecurso-2000/assets/config/salvar_venda.php", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({ venda: vendaData })
-  })
-  .then(response => response.json())
-  .then(data => {
-    if (data.sucesso) {
-      alert("Compra finalizada com sucesso!");
-      document.getElementById("cart-table-body").innerHTML = "";
-      updateTotal();
-    } else {
-      alert("Erro ao salvar alguns itens.");
-      console.error(data.erros);
-    }
-  })
-  .catch(error => {
-    alert("Erro ao enviar a venda para o servidor.");
-    console.error("Erro na requisição:", error);
-  });
-}
-
-
-
 function updateTotal() {
   const cartProducts = document.getElementsByClassName("cart-product");
   let total = 0;
@@ -165,6 +112,58 @@ function updateTotal() {
   }
 
   totalAmount = total.toFixed(2).replace(".", ",");
-  document.querySelector(".cart-total-container span").innerText = "R$" + totalAmount;
+  const totalSpan = document.querySelector(".cart-total-container span");
+  if (totalSpan) totalSpan.innerText = "R$" + totalAmount;
 }
 
+function makePurchase() {
+  const cartProducts = document.querySelectorAll("tr.cart-product");
+  const carrinho = [];
+
+  if (cartProducts.length === 0) {
+    alert("Seu carrinho está vazio!");
+    return;
+  }
+
+  if (!confirm("Deseja realmente finalizar a compra?")) return;
+
+  cartProducts.forEach(product => {
+    const nome = product.querySelector(".cart-product-title").innerText;
+    const precoText = product.querySelector(".cart-product-price").innerText.replace("R$", "").replace(",", ".");
+    const quantidade = parseInt(product.querySelector(".product-qtd-input").value);
+    const preco = parseFloat(precoText);
+    const gasto = preco * 0.75;
+    const lucro = preco * 0.25;
+
+    carrinho.push({
+      nome,
+      preco,
+      quantidade,
+      gasto,
+      lucro
+    });
+  });
+
+  fetch("assets/config/salvar_venda.php", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({ carrinho }) // ✅ CORRETO
+})
+
+  .then(res => res.json())
+  .then(data => {
+    if (data.success) {
+      alert("Compra finalizada com sucesso!");
+      document.getElementById("cart-table-body").innerHTML = "";
+      updateTotal();
+    } else {
+      alert("Erro: " + (data.message || "Erro desconhecido"));
+    }
+  })
+  .catch(error => {
+    console.error("Erro:", error);
+    alert("Erro ao enviar para o servidor.");
+  });
+}

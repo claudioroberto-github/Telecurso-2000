@@ -57,8 +57,14 @@ $logged = isset($_SESSION['user']) ? $_SESSION['user'] : '';
           </li>
           <li class="menu-item">
             <a href="menu.php" class="menu-link">
-              <span class="material-symbols-rounded">Menu</span>
+              <span class="material-symbols-rounded">room_service</span>
               <span class="menu-label">Menu</span>
+            </a>
+          </li>
+          <li class="menu-item">
+            <a href="products.php" class="menu-link">
+              <span class="material-symbols-rounded" aria-label="Products">storefront</span>
+              <span class="menu-label">Products</span>
             </a>
           </li>
           <li class="menu-item">
@@ -71,12 +77,6 @@ $logged = isset($_SESSION['user']) ? $_SESSION['user'] : '';
             <a href="#" class="menu-link">
               <span class="material-symbols-rounded">star</span>
               <span class="menu-label">Favourites</span>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="products.php" class="menu-link">
-              <span class="material-symbols-rounded">storefront</span>
-              <span class="menu-label">Products</span>
             </a>
           </li>
           <li class="menu-item">

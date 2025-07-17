@@ -39,7 +39,6 @@ $id_usuario = $_SESSION['id'];
     <aside class="sidebar collapsed">
       <!-- Sidebar header -->
       <div class="sidebar-header">
-        <img src="logo.png" alt="CodingNepal" class="header-logo" />
         <button class="sidebar-toggle">
           <span class="material-symbols-rounded">chevron_left</span>
         </button>
@@ -61,8 +60,14 @@ $id_usuario = $_SESSION['id'];
           </li>
           <li class="menu-item">
             <a href="#" class="menu-link">
-              <span class="material-symbols-rounded" aria-label="Menu">menu</span>
+              <span class="material-symbols-rounded" aria-label="Menu">room_service</span>
               <span class="menu-label">Menu</span>
+            </a>
+          </li>
+          <li class="menu-item">
+            <a href="products.php" class="menu-link">
+              <span class="material-symbols-rounded" aria-label="Products">storefront</span>
+              <span class="menu-label">Products</span>
             </a>
           </li>
           <li class="menu-item">
@@ -75,12 +80,6 @@ $id_usuario = $_SESSION['id'];
             <a href="#" class="menu-link">
               <span class="material-symbols-rounded" aria-label="Favourites">star</span>
               <span class="menu-label">Favourites</span>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="products.php" class="menu-link">
-              <span class="material-symbols-rounded" aria-label="Products">storefront</span>
-              <span class="menu-label">Products</span>
             </a>
           </li>
           <li class="menu-item">
@@ -301,7 +300,7 @@ $id_usuario = $_SESSION['id'];
               </tr>
             </tfoot>
           </table>
-          <button type="button" class="purchase-button" style="margin-top: 24px;">Finalizar Compra</button>
+          <button type="button" id="finalizar" class="purchase-button" style="margin-top: 24px;">Finalizar Compra</button>
         </section>
       </div>
 
@@ -324,7 +323,18 @@ $id_usuario = $_SESSION['id'];
       }
     </style>
     <script src="assets/js/menu/menu.js"></script>
-
+    <script src="assets/js/menu/finalizar_compra.js"></script>
     <script src="assets/js/home/home.js"></script>
+
+      <script>
+        document.addEventListener('DOMContentLoaded', () => {
+  const btn = document.getElementById('finalizar');
+  if (btn) {
+    btn.addEventListener('click', makePurchase);
+  }
+});
+
+</script>
+>>>>>>> e6b6af8 (consegui arrumar o menu de vendas com o banco de dados)
 </body>
 </html>

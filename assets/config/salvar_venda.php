@@ -1,6 +1,19 @@
 <?php
 session_start();
-include_once('assets/config/config.php');
+date_default_timezone_set('America/Sao_Paulo');
+header('Content-Type: application/json');
+
+// Mostrar erros (remover em produção)
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+  echo json_encode(['success' => false, 'message' => 'Requisição inválida.']);
+  exit;
+}
+
+require_once 'config.php'; // conexão com o banco
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -8,72 +21,46 @@ error_reporting(E_ALL);
 
 
 if (!isset($_SESSION['id'])) {
-    http_response_code(401);
-    echo json_encode(["erro" => "Usuário não autenticado."]);
-    exit;
+  echo json_encode(['success' => false, 'message' => 'Usuário não autenticado.']);
+  exit;
+}
+
+$data = json_decode(file_get_contents('php://input'), true);
+if (!isset($data['carrinho']) || !is_array($data['carrinho'])) {
+  echo json_encode(['success' => false, 'message' => 'Dados do carrinho inválidos.']);
+  exit;
 }
 
 $id_usuario = $_SESSION['id'];
-
-$data_raw = file_get_contents('php://input');
-
-$data = json_decode($data_raw, true);
-
-if (json_last_error() !== JSON_ERROR_NONE) {
-    http_response_code(400);
-    echo json_encode(["erro" => "Erro ao decodificar JSON: " . json_last_error_msg()]);
-    exit;
-}
-
-if (!is_array($data) || !isset($data['venda']) || !is_array($data['venda']) || empty($data['venda'])) {
-    http_response_code(400);
-    echo json_encode(["erro" => "JSON inválido ou vazio.", "conteudo" => $data]);
-    exit;
-}
-
-$venda = $data['venda'];
 $data_venda = date('Y-m-d H:i:s');
+$pedido = uniqid();
 
-$query = "INSERT INTO vendas_produtos (data_venda, produtos, quantVendida, preco, gasto, lucro, id_usuario) VALUES (?, ?, ?, ?, ?, ?, ?)";
-$stmt = $conexao->prepare($query);
-if (!$stmt) {
-    http_response_code(500);
-    echo json_encode(["erro" => "Erro ao preparar statement: " . $conexao->error]);
-    exit;
-}
+try {
+  $conexao->begin_transaction();
 
-$produto = '';
-$quant = 0;
-$preco = 0.0;
-$gasto = 0.0;
-$lucro = 0.0;
+  foreach ($data['carrinho'] as $item) {
+    $nome = $item['nome'];
+    $quantidade = (int)$item['quantidade'];
+    $preco = (float)$item['preco'];
+    $gasto = isset($item['gasto']) ? (float)$item['gasto'] : 0.00;
+    $lucro = isset($item['lucro']) ? (float)$item['lucro'] : ($preco - $gasto) * $quantidade;
 
-$stmt->bind_param("ssidddi", $data_venda, $produto, $quant, $preco, $gasto, $lucro, $id_usuario);
+    $stmt = $conexao->prepare("INSERT INTO vendas_produtos (pedido, data_venda, produtos, quantVendida, preco, gasto, lucro, id_usuario)
+                            VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("sssidddi", $pedido, $data_venda, $nome, $quantidade, $preco, $gasto, $lucro, $id_usuario);
 
-$sucesso = true;
-$erros = [];
-foreach ($venda as $item) {
-    if (!isset($item['produto'], $item['quantVendida'], $item['preco'], $item['gasto'], $item['lucro'])) {
-        $erros[] = ["item" => $item, "erro" => "Item malformado ou campos ausentes."];
-        $sucesso = false;
-        continue;
-    }
-    $produto = $item['produto'];
-    $quant = intval($item['quantVendida']);
-    $preco = floatval($item['preco']);
-    $gasto = floatval($item['gasto']);
-    $lucro = floatval($item['lucro']);
     if (!$stmt->execute()) {
-        $erros[] = ["item" => $item, "erro" => $stmt->error];
-        $sucesso = false;
+      throw new Exception("Erro ao salvar produto: " . $stmt->error);
     }
-}
-$stmt->close();
+  }
 
-if ($sucesso) {
-    echo json_encode(["sucesso" => true, "mensagem" => "Venda registrada com sucesso!"]);
-} else {
-    http_response_code(400);
-    echo json_encode(["sucesso" => false, "mensagem" => "Alguns itens não foram salvos.", "erros" => $erros]);
+  $conexao->commit();
+  echo json_encode(['success' => true, 'message' => 'Venda registrada com sucesso.']);
+
+} catch (Exception $e) {
+  $conexao->rollback();
+  echo json_encode(['success' => false, 'message' => 'Erro ao registrar venda: ' . $e->getMessage()]);
 }
+
+$conexao->close();
 ?>

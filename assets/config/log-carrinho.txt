@@ -1,0 +1,1 @@
+{"carrinho":[{"nome":"Suco","preco":8.99,"quantidade":1,"gasto":6.7425,"lucro":2.2475}]}
