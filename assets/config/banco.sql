@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 17/07/2025 às 02:04
+-- Tempo de geração: 18/07/2025 às 03:55
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.0.30
 
@@ -61,7 +61,8 @@ INSERT INTO `produtos` (`id_produto`, `nome_produto`, `preco_produto`, `classe_p
 (24, 'Lanche', 19.99, 'Prato Principal', 'assets/uploads/68762fc47c587_lanches-gourmet.webp', 38),
 (25, 'Batata Frita', 9.99, 'Entrada', 'assets/uploads/68763023e5e81_images.jpeg', 38),
 (26, 'Cerveja', 16.99, 'Bebidas alcoolicas', 'assets/uploads/68781a2b19bcc_cerveja.jpg', 38),
-(27, 'Patês com Torradas', 11.99, 'Entrada', 'assets/uploads/68781a73989db_patês com torradas.jpg', 38);
+(27, 'Patês com Torradas', 11.99, 'Entrada', 'assets/uploads/68781a73989db_patês com torradas.jpg', 38),
+(28, 'Sorvete de Chocolate', 17.00, 'Sobremesa', 'assets/uploads/68799274dacf4_Sorvete de chocolate.jpg', 38);
 
 -- --------------------------------------------------------
 
@@ -90,7 +91,8 @@ CREATE TABLE `usuarios` (
 
 INSERT INTO `usuarios` (`id`, `user`, `company`, `cnpj`, `email`, `telephone`, `dwelling`, `city`, `province`, `birth`, `img`, `passwords`) VALUES
 (37, 'DEBORA ROSMANN CORDEIRO RUI', 'claudio', 545454, 'claudiorobertocordeirorui@gmail.com', 2147483647, 'Rua José Bonifácio', 'Presidente Prudente', 'SP', '2121-12-12', 'CLAUDIO RUI - currículo.pdf (1).png', '123'),
-(38, 'Cláudio Roberto', 'Kopas Engenering', 12316532, 'Diretoria@kopas.engeneer.sp.gov.br', 2147483647, 'Rua José Bonifácio', 'Presidente Prudente', 'SP', '1212-12-12', '', '123');
+(38, 'Cláudio Roberto', 'Kopas Engenering', 12316532, 'Diretoria@kopas.engeneer.sp.gov.br', 2147483647, 'Rua José Bonifácio', 'Presidente Prudente', 'SP', '1212-12-12', '', '123'),
+(39, 'teste', 'teste', 654849, 'teste@gmail.com', 2147483647, 'Rua José Bonifácio', 'Presidente Prudente', 'SP', '1233-12-12', 'config/img_user/Sorvete de chocolate.jpg', '123');
 
 -- --------------------------------------------------------
 
@@ -114,19 +116,8 @@ CREATE TABLE `vendas_produtos` (
 --
 
 INSERT INTO `vendas_produtos` (`pedido`, `data_venda`, `produtos`, `quantVendida`, `preco`, `gasto`, `lucro`, `id_usuario`) VALUES
-(6878174, '2025-07-16 18:19:09', 'Suco', 4, 8.99, 6.7425, 2.2475, 38),
-(6878174, '2025-07-16 18:19:09', 'Batata Frita', 3, 9.99, 7.4925, 2.4975, 38),
-(687817758, '2025-07-16 18:19:49', 'Lanche', 4, 19.99, 14.9925, 4.9975, 38),
-(687817758, '2025-07-16 18:19:49', 'caipirinha', 4, 15.99, 11.9925, 3.9975, 38),
-(687817758, '2025-07-16 18:19:49', 'Batata Frita', 3, 9.99, 7.4925, 2.4975, 38),
-(687817758, '2025-07-16 18:19:49', 'Suco Prats', 3, 9.99, 7.4925, 2.4975, 38),
-(687817758, '2025-07-16 18:19:49', 'Almoço', 2, 39.99, 29.9925, 9.9975, 38),
-(687817758, '2025-07-16 18:19:49', 'Suco', 3, 8.99, 6.7425, 2.2475, 38),
-(6878178, '2025-07-16 18:20:13', 'Suco', 1, 8.99, 6.7425, 2.2475, 38),
-(68781, '2025-07-16 18:41:27', 'Almoço', 4, 39.99, 29.9925, 9.9975, 38),
-(68781, '2025-07-16 18:41:27', 'Patês com Torradas', 3, 11.99, 8.9925, 2.9975, 38),
-(68781, '2025-07-16 18:41:27', 'Cerveja', 5, 16.99, 12.7425, 4.2475, 38),
-(2147483647, '2025-07-16 18:49:58', 'Cerveja', 3, 16.99, 12.7425, 4.2475, 38);
+(6879930, '2025-07-17 21:19:27', 'Batata Frita', 3, 9.99, 7.4925, 2.4975, 38),
+(687993, '2025-07-17 21:22:05', 'Sorvete de Chocolate', 5, 17, 12.75, 4.25, 38);
 
 --
 -- Índices para tabelas despejadas
@@ -153,13 +144,13 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de tabela `produtos`
 --
 ALTER TABLE `produtos`
-  MODIFY `id_produto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id_produto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT de tabela `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- Restrições para tabelas despejadas
