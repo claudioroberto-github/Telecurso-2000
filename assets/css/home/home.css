@@ -65,10 +65,11 @@ body {
 }
 
 .sidebar-header .header-logo {
-    width: 46px;
-    height: 46px;
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    box-shadow: 0 1px 3px var(--color-shadow);
     display: block;
-    object-fit: contain;
     border-radius: 50%;
     transition: opacity 0.4s ease;
 }
@@ -201,10 +202,7 @@ body {
     transition: opacity 0.3s ease;
 }
 .user-name{
-    opacity: 0;
-    pointer-events: none;
-
-    display: none;
+    display: flex;
     gap: 12px;
     white-space: nowrap;
     border-radius: 8px;

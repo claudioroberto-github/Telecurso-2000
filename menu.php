@@ -59,8 +59,8 @@ while ($row = $result->fetch_assoc()) {
           <span class="material-symbols-rounded">chevron_left</span>
         </button>
       </div>
-      <div class="sidebar-content">
-        <?php echo '<p class="user-name">Welcome <b>' . htmlspecialchars($logged) . '</b></p>'; ?>
+      <div class="sidebar-content">  
+        <p class="user-name">Welcome <b><?php echo htmlspecialchars($logged); ?></b></p>
         <!-- Search Form -->
         <form action="#" class="search-form">
           <span class="material-symbols-rounded">search</span>

@@ -1,7 +1,22 @@
 <?php
-
 session_start();
 include_once('assets/config/config.php');
+$id_usuario = $_SESSION['id']; // pega o id do usuário logado
+// Buscar a imagem do usuário logado
+$sql_img = "SELECT img FROM usuarios WHERE id = ?";
+$stmt = $conexao->prepare($sql_img);
+$stmt->bind_param("i", $id_usuario);
+$stmt->execute();
+$result_img = $stmt->get_result();
+$imagem_usuario = 'assets/imgs/default_user.png'; // imagem padrão, se não tiver
+
+if ($result_img && $row_img = $result_img->fetch_assoc()) {
+    if (!empty($row_img['img'])) {
+        $imagem_usuario = $row_img['img'];
+    }
+}
+
+
 if ((!isset($_SESSION['email']) == true) and (!isset($_SESSION['senha']) == true)) {
   header('Location: /Telecurso-2000/login.php');
   unset($_SESSION['email']);
@@ -34,7 +49,7 @@ $logged = isset($_SESSION['user']) ? $_SESSION['user'] : '';
     <aside class="sidebar collapsed">
       <!-- Sidebar header -->
       <div class="sidebar-header">
-        <img src="logo.png" alt="CodingNepal" class="header-logo" />
+        <img src="<?php echo htmlspecialchars($imagem_usuario); ?>" alt="Foto do Usuário" class="header-logo" style="border-radius: 50%; width: 40px; height: 40px;" />
         <button class="sidebar-toggle">
           <span class="material-symbols-rounded">chevron_left</span>
         </button>
@@ -247,8 +262,12 @@ $logged = isset($_SESSION['user']) ? $_SESSION['user'] : '';
     <table class="vendas-mes">
       <tbody>
         <?php
-        $sql = "SELECT pedido, data_venda, produtos, quantVendida, preco FROM vendas_produtos ORDER BY data_venda DESC";
-        $result = $conexao->query($sql);
+        $sql = "SELECT pedido, data_venda, produtos, quantVendida, preco FROM vendas_produtos WHERE id_usuario = $id_usuario ORDER BY data_venda DESC";
+        $stmt = $conexao->prepare("SELECT pedido, data_venda, produtos, quantVendida, preco FROM vendas_produtos WHERE id_usuario = ? ORDER BY data_venda DESC");
+        $stmt->bind_param("i", $id_usuario);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
 
         $totalPreco = 0;
 

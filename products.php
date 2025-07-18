@@ -58,6 +58,7 @@ if (isset($_POST['add_product'])) {
         echo "<script>alert('❌ Nenhuma imagem foi enviada ou ocorreu erro no upload.');</script>";
     }
 }
+$logged = isset($_SESSION['user']) ? $_SESSION['user'] : '';
 ?>
 
 <!DOCTYPE html>
@@ -88,6 +89,7 @@ if (isset($_POST['add_product'])) {
         </button>
       </div>
       <div class="sidebar-content">
+        <p class="user-name">Welcome <b><?php echo htmlspecialchars($logged); ?></b></p>
         <!-- Search Form -->
         <form action="#" class="search-form">
           <span class="material-symbols-rounded">search</span>

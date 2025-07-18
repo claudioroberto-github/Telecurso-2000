@@ -1,33 +1,55 @@
 <?php
+if (!is_dir('config/img_user')) {
+    mkdir('config/img_user', 0777, true);
+}
 session_start();
+include_once('assets/config/config.php');
+
 if (isset($_POST['submit'])) {
 
-  include_once('assets/config/config.php');
-  $user = $_POST['user'];
-  $email = $_POST['email'];
-  $company = $_POST['company'];
-  $cnpj = $_POST['cnpj'];
-  $telephone = $_POST['telephone'];
-  $address = $_POST['dwelling'];
-  $city = $_POST['city'];
-  $state = $_POST['province'];
-  $birth = $_POST['birth'];
-  $password = $_POST['passwords'];
-  $cor_principal = $_POST['cor_principal'];
-  $cor_secundaria = $_POST['cor_secundaria'];
-  $cor_fundo = $_POST['cor_fundo'];
-  $cor_texto = $_POST['cor_texto'];
-  // Verifica se o usuário já existe
-  $checkUser = mysqli_query($conexao, "SELECT * FROM usuarios WHERE user='$user' OR email='$email'");
-  if (mysqli_num_rows($checkUser) > 0) {
-    echo "<script>alert('Usuário ou email já cadastrado!');</script>";
-    exit();
-  }
+    // Coleta os dados do formulário
+    $user = $_POST['user'];
+    $company = $_POST['company'];
+    $cnpj = $_POST['cnpj'];
+    $email = $_POST['email'];
+    $telephone = $_POST['telephone'];
+    $dwelling = $_POST['dwelling'];
+    $city = $_POST['city'];
+    $province = $_POST['province'];
+    $birth = $_POST['birth'];
+    $password = $_POST['passwords'];
 
-  $result = mysqli_query($conexao, "INSERT INTO usuarios(user, email, company, cnpj, telephone, dwelling, city, province, birth, passwords)
-    VALUES('$user', '$email', '$company', '$cnpj', '$telephone', '$address', '$city', '$state', '$birth', '$password')");
+    // Verifica e faz upload da imagem
+    if (isset($_FILES['img']) && $_FILES['img']['error'] === 0) {
+        $img_nome = $_FILES['img']['name'];
+        $img_temp = $_FILES['img']['tmp_name'];
+        $img_caminho = 'config/img_user/' . basename($img_nome);
+
+        // Move imagem para a pasta
+        if (move_uploaded_file($img_temp, $img_caminho)) {
+            
+        } else {
+            echo "Erro ao mover imagem.<br>";
+            exit;
+        }
+    } else {
+        echo "Erro no upload da imagem.<br>";
+        exit;
+    }
+
+    // Query SQL para inserir usuário
+    $sql = "INSERT INTO usuarios (user, company, cnpj, email, telephone, dwelling, city, province, birth, img, passwords) 
+            VALUES ('$user', '$company', '$cnpj', '$email', '$telephone', '$dwelling', '$city', '$province', '$birth', '$img_caminho', '$password')";
+
+    if ($conexao->query($sql) === TRUE) {
+        echo "<script>alert('Cadastro realizado com sucesso!');</script>";
+    } else {
+        echo "<script>alert('Erro: " . $conexao->error . "');</script>";
+    }
 }
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -90,7 +112,7 @@ if (isset($_POST['submit'])) {
         <i class="fa-solid fa-map-pin"></i>
         <input name="birth" type="date" placeholder="Date of Birth" required />
         <i class="fa-solid fa-calendar-days"></i>
-        <input name="img" type="file" accept="image/*" />
+        <input name="img" type="file" accept="image/*" required/>
         <i class="fa-solid fa-image"></i>
         <input name="passwords" type="password" placeholder="Create Your Password" required />
         <i class="fas fa-lock"></i>
