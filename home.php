@@ -115,122 +115,174 @@ $logged = isset($_SESSION['user']) ? $_SESSION['user'] : '';
     <main>
       <h1>Vendas do Mês</h1>
       <style>
-        .table-wrapper {
-          width: 100%;
-          max-width: 100%;
-          margin-top: 24px;
-          background: #fff;
-          border-radius: 12px;
-          box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-          overflow: hidden;
-          position: relative;
-        }
-        table.vendas-mes {
-          width: 100%;
-          border-collapse: separate;
-          border-spacing: 0;
-          font-size: 1rem;
-          background: #fff;
-        }
-        table.vendas-mes th, table.vendas-mes td {
-          padding: 12px 10px;
-          text-align: center;
-          min-width: 120px;
-        }
-        table.vendas-mes thead th {
-          background: #f5f5f5;
-          font-weight: 700;
-          font-size: 1.08rem;
-          border-bottom: 2px solid #ececec;
-          position: sticky;
-          top: 0;
-          z-index: 2;
-        }
-        .tbody-scroll {
-          display: block;
-          max-height: 340px;
-          overflow-y: auto;
-          width: 100%;
-        }
-        .tbody-scroll tbody {
-          display: table;
-          width: 100%;
-          table-layout: fixed;
-        }
-        .tbody-scroll tbody tr:nth-child(even) {
-          background: #fafafa;
-        }
-        .tbody-scroll tbody tr:nth-child(odd) {
-          background: #fff;
-        }
-        tfoot.sticky-total tr td {
-          background: #f5f5f5;
-          font-weight: 700;
-          border-top: 2px solid #ececec;
-          font-size: 1.08rem;
-          position: sticky;
-          bottom: 0;
-          z-index: 2;
-        }
-        .tbody-scroll::-webkit-scrollbar {
-          width: 10px;
-          border-radius: 12px;
-          background: #ececec;
-        }
-        .tbody-scroll::-webkit-scrollbar-thumb {
-          background: #d1d1d1;
-          border-radius: 12px;
-        }
-        .tbody-scroll {
-          scrollbar-width: thin;
-          scrollbar-color: #d1d1d1 #ececec;
-        }
-      </style>
-      <div class="table-wrapper">
-        <table class="vendas-mes">
-          <thead>
-            <tr>
-              <th>Pedido</th>
-              <th>Produto</th>
-              <th>Quantidade Vendida</th>
-              <th>Preço</th>
-              <th>Gastos</th>
-              <th>Lucro</th>
-            </tr>
-          </thead>
-        </table>
-        <div class="tbody-scroll">
-          <table class="vendas-mes">
-            <tbody>
-            <tr>
-              <td><a href="#">1</a></td>
-              <td>Lanche</td>
-              <td>25</td>
-              <td>R$ 25,00</td>
-              <td>R$ 18,75</td>
-              <td>R$ 6,25</td>
-            </tr>
-          </tbody>
-          <tfoot>
-            </tbody>
-          </table>
-        </div>
-        <table class="vendas-mes">
-          <tfoot class="sticky-total">
-            <tr>
-              <td></td>
-              <td>Total</td>
-              <td>75</td>
-              <td>R$ 121,00</td>
-              <td>R$ 90,75</td>
-              <td>R$ 30,25</td>
-            </tr>
-          </tfoot>
-        </table>
-          </tfoot>
-        </table>
-      </table>
+  .table-wrapper {
+    width: 100%;
+    margin-top: 24px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    position: relative;
+  }
 
+  table.vendas-mes {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 1rem;
+    background: #fff;
+    table-layout: fixed;
+  }
+
+  table.vendas-mes th,
+  table.vendas-mes td {
+    padding: 14px 10px;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+  }
+
+  table.vendas-mes thead th {
+    background: #f5f5f5;
+    font-weight: 700;
+    font-size: 1.08rem;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
+
+  .tbody-scroll {
+    max-height: 340px;
+    overflow-y: auto;
+  }
+
+  .tbody-scroll table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+  }
+
+  .tbody-scroll tbody tr:nth-child(even) {
+    background: #fafafa;
+  }
+
+  .tbody-scroll tbody tr:nth-child(odd) {
+    background: #fff;
+  }
+
+  .tbody-scroll::-webkit-scrollbar {
+    width: 10px;
+    background: #ececec;
+  }
+
+  .tbody-scroll::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 12px;
+  }
+
+  .tbody-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: #ccc #ececec;
+  }
+
+  table.vendas-mes tfoot td {
+    background: #f5f5f5;
+    font-weight: bold;
+    font-size: 1.05rem;
+  }
+
+  tfoot.sticky-total tr td {
+    position: sticky;
+    bottom: 0;
+    background: #f5f5f5;
+    z-index: 1;
+    border-top: 2px solid #e0e0e0;
+  }
+
+  table.vendas-mes th:nth-child(1),
+  table.vendas-mes td:nth-child(1) {
+    width: 18%;
+  }
+
+  table.vendas-mes th:nth-child(2),
+  table.vendas-mes td:nth-child(2) {
+    width: 26%;
+    text-align: center;
+  }
+
+  table.vendas-mes th:nth-child(3),
+  table.vendas-mes td:nth-child(3),
+  table.vendas-mes th:nth-child(4),
+  table.vendas-mes td:nth-child(4),
+  table.vendas-mes th:nth-child(5),
+  table.vendas-mes td:nth-child(5),
+  table.vendas-mes th:nth-child(6),
+  table.vendas-mes td:nth-child(6) {
+    width: 14%;
+  }
+
+  a {
+    color: #333;
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+</style>
+
+      <div class="table-wrapper">
+  <table class="vendas-mes">
+    <thead>
+      <tr>
+        <th>Pedido</th>
+        <th>Data da Venda</th>
+        <th>Produto</th>
+        <th>Quantidade Vendida</th>
+        <th>Preço (R$)</th>
+      </tr>
+    </thead>
+  </table>
+
+  <div class="tbody-scroll">
+    <table class="vendas-mes">
+      <tbody>
+        <?php
+        $sql = "SELECT pedido, data_venda, produtos, quantVendida, preco FROM vendas_produtos ORDER BY data_venda DESC";
+        $result = $conexao->query($sql);
+
+        $totalPreco = 0;
+
+        if ($result && $result->num_rows > 0) {
+          while ($row = $result->fetch_assoc()) {
+            $totalPreco += $row['preco'] * $row['quantVendida'];
+
+            echo "<tr>
+              <td>{$row['pedido']}</td>
+              <td>" . htmlspecialchars($row['data_venda']) . "</td>
+              <td>" . htmlspecialchars($row['produtos']) . "</td>
+              <td>{$row['quantVendida']}</td>
+              <td>R$ " . number_format($row['preco'], 2, ',', '.') . "</td>
+            </tr>";
+          }
+        } else {
+          echo "<tr><td colspan='6'>Nenhuma venda registrada.</td></tr>";
+        }
+        ?>
+      </tbody>
+    </table>
+  </div>
+
+  <table class="vendas-mes">
+    <tfoot class="sticky-total">
+      <tr>
+        <td></td>
+        <td><strong>Total</strong></td>
+        <td></td>
+        <td><strong>R$ <?php echo number_format($totalPreco, 2, ',', '.'); ?></strong></td>
+      </tr>
+    </tfoot>
+  </table>
+</div>
     </main>
   </div>
   <script src="assets/js/home/home.js"></script>
