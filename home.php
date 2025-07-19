@@ -33,7 +33,7 @@ $logged = isset($_SESSION['user']) ? $_SESSION['user'] : '';
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bem-vindo <?php if (isset($_SESSION['user'])) echo '| ' . htmlspecialchars($_SESSION['user']); ?></title>
+  <title>Bem-vindo <?php if (isset($_SESSION['user'])) echo htmlspecialchars($_SESSION['user']); ?></title>
   <link rel="stylesheet" href="assets/css/home/home.css" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
 </head>
@@ -49,7 +49,7 @@ $logged = isset($_SESSION['user']) ? $_SESSION['user'] : '';
     <aside class="sidebar collapsed">
       <!-- Sidebar header -->
       <div class="sidebar-header">
-        <img src="<?php echo htmlspecialchars($imagem_usuario); ?>" alt="Foto do Usuário" class="header-logo" style="border-radius: 50%; width: 40px; height: 40px;" />
+        <img src="<?php echo htmlspecialchars($imagem_usuario); ?>" alt="Foto do Usuário" class="header-logo" />
         <button class="sidebar-toggle">
           <span class="material-symbols-rounded">chevron_left</span>
         </button>
@@ -106,25 +106,17 @@ $logged = isset($_SESSION['user']) ? $_SESSION['user'] : '';
               <span class="menu-label">Settings</span>
             </a>
           </li>
-          <li class="menu-item">
+          
+        </ul>
+      </div>
+      <!-- Sidebar Footer -->
+      <div class="sidebar-footer">
+        <li class="menu-item" style="list-style: none;">
             <a href="assets/config/logOut.php" class="logout">
               <span class="material-symbols-rounded">logout</span>
               <span class="menu-label">Log Out</span>
             </a>
           </li>
-        </ul>
-      </div>
-      <!-- Sidebar Footer -->
-      <div class="sidebar-footer">
-        <button class="theme-toggle">
-          <div class="theme-label">
-            <span class="theme-icon material-symbols-rounded">dark_mode</span>
-            <span class="theme-text">Dark Mode</span>
-          </div>
-          <div class="theme-toggle-track">
-            <div class="theme-toggle-indicator"></div>
-          </div>
-        </button>
       </div>
     </aside>
     <main>

@@ -2,6 +2,21 @@
 session_start();
 include_once('assets/config/config.php');
 
+$id_usuario = $_SESSION['id']; // pega o id do usuário logado
+// Buscar a imagem do usuário logado
+$sql_img = "SELECT img FROM usuarios WHERE id = ?";
+$stmt = $conexao->prepare($sql_img);
+$stmt->bind_param("i", $id_usuario);
+$stmt->execute();
+$result_img = $stmt->get_result();
+$imagem_usuario = 'assets/imgs/default_user.png'; // imagem padrão, se não tiver
+
+if ($result_img && $row_img = $result_img->fetch_assoc()) {
+  if (!empty($row_img['img'])) {
+    $imagem_usuario = $row_img['img'];
+  }
+}
+
 // Verifica se o usuário está logado
 if (!isset($_SESSION['id'])) {
     session_unset();
@@ -84,6 +99,7 @@ $logged = isset($_SESSION['user']) ? $_SESSION['user'] : '';
     <aside class="sidebar collapsed">
       <!-- Sidebar header -->
       <div class="sidebar-header">
+        <img src="<?php echo htmlspecialchars($imagem_usuario); ?>" alt="Foto do Usuário" class="header-logo" />
         <button class="sidebar-toggle">
           <span class="material-symbols-rounded">chevron_left</span>
         </button>
@@ -97,6 +113,7 @@ $logged = isset($_SESSION['user']) ? $_SESSION['user'] : '';
         </form>
         <!-- Sidebar Menu -->
         <ul class="menu-list">
+
           <li class="menu-item">
             <a href="home.php" class="menu-link">
               <span class="material-symbols-rounded">home</span>
@@ -110,7 +127,7 @@ $logged = isset($_SESSION['user']) ? $_SESSION['user'] : '';
             </a>
           </li>
           <li class="menu-item">
-            <a href="products.php" class="menu-link">
+            <a href="#" class="menu-link">
               <span class="material-symbols-rounded" aria-label="Products">storefront</span>
               <span class="menu-label">Products</span>
             </a>
@@ -122,7 +139,7 @@ $logged = isset($_SESSION['user']) ? $_SESSION['user'] : '';
             </a>
           </li>
           <li class="menu-item">
-            <a href="menu.php" class="menu-link">
+            <a href="#" class="menu-link">
               <span class="material-symbols-rounded">star</span>
               <span class="menu-label">Favourites</span>
             </a>
@@ -139,25 +156,17 @@ $logged = isset($_SESSION['user']) ? $_SESSION['user'] : '';
               <span class="menu-label">Settings</span>
             </a>
           </li>
-          <li class="menu-item">
+          
+        </ul>
+      </div>
+      <!-- Sidebar Footer -->
+      <div class="sidebar-footer">
+        <li class="menu-item" style="list-style: none;">
             <a href="assets/config/logOut.php" class="logout">
               <span class="material-symbols-rounded">logout</span>
               <span class="menu-label">Log Out</span>
             </a>
           </li>
-        </ul>
-      </div>
-      <!-- Sidebar Footer -->
-      <div class="sidebar-footer">
-        <button class="theme-toggle">
-          <div class="theme-label">
-            <span class="theme-icon material-symbols-rounded">dark_mode</span>
-            <span class="theme-text">Dark Mode</span>
-          </div>
-          <div class="theme-toggle-track">
-            <div class="theme-toggle-indicator"></div>
-          </div>
-        </button>
       </div>
     </aside>
     <!-- Main Content -->

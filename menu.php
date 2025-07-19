@@ -1,8 +1,20 @@
 <?php 
-
-
 session_start();
 include_once('assets/config/config.php');
+$id_usuario = $_SESSION['id']; // pega o id do usuário logado
+// Buscar a imagem do usuário logado
+$sql_img = "SELECT img FROM usuarios WHERE id = ?";
+$stmt = $conexao->prepare($sql_img);
+$stmt->bind_param("i", $id_usuario);
+$stmt->execute();
+$result_img = $stmt->get_result();
+$imagem_usuario = 'assets/imgs/default_user.png'; // imagem padrão, se não tiver
+
+if ($result_img && $row_img = $result_img->fetch_assoc()) {
+    if (!empty($row_img['img'])) {
+        $imagem_usuario = $row_img['img'];
+    }
+}
 
 if (!isset($_SESSION['user']) || !isset($_SESSION['id'])) {
   session_unset();
@@ -55,11 +67,12 @@ while ($row = $result->fetch_assoc()) {
     <aside class="sidebar collapsed">
       <!-- Sidebar header -->
       <div class="sidebar-header">
+        <img src="<?php echo htmlspecialchars($imagem_usuario); ?>" alt="Foto do Usuário" class="header-logo" />
         <button class="sidebar-toggle">
           <span class="material-symbols-rounded">chevron_left</span>
         </button>
       </div>
-      <div class="sidebar-content">  
+      <div class="sidebar-content">
         <p class="user-name">Welcome <b><?php echo htmlspecialchars($logged); ?></b></p>
         <!-- Search Form -->
         <form action="#" class="search-form">
@@ -68,15 +81,16 @@ while ($row = $result->fetch_assoc()) {
         </form>
         <!-- Sidebar Menu -->
         <ul class="menu-list">
+
           <li class="menu-item">
             <a href="home.php" class="menu-link">
-              <span class="material-symbols-rounded" aria-label="Home">home</span>
+              <span class="material-symbols-rounded">home</span>
               <span class="menu-label">Home</span>
             </a>
           </li>
           <li class="menu-item">
             <a href="#" class="menu-link">
-              <span class="material-symbols-rounded" aria-label="Menu">room_service</span>
+              <span class="material-symbols-rounded">room_service</span>
               <span class="menu-label">Menu</span>
             </a>
           </li>
@@ -88,47 +102,39 @@ while ($row = $result->fetch_assoc()) {
           </li>
           <li class="menu-item">
             <a href="#" class="menu-link">
-              <span class="material-symbols-rounded" aria-label="Notifications">notifications</span>
+              <span class="material-symbols-rounded">notifications</span>
               <span class="menu-label">Notifications</span>
             </a>
           </li>
           <li class="menu-item">
             <a href="#" class="menu-link">
-              <span class="material-symbols-rounded" aria-label="Favourites">star</span>
+              <span class="material-symbols-rounded">star</span>
               <span class="menu-label">Favourites</span>
             </a>
           </li>
           <li class="menu-item">
             <a href="#" class="menu-link">
-              <span class="material-symbols-rounded" aria-label="Customers">group</span>
+              <span class="material-symbols-rounded">group</span>
               <span class="menu-label">Customers</span>
             </a>
           </li>
           <li class="menu-item">
             <a href="settings.php" class="menu-link">
-              <span class="material-symbols-rounded" aria-label="Settings">settings</span>
+              <span class="material-symbols-rounded">settings</span>
               <span class="menu-label">Settings</span>
             </a>
           </li>
-          <li class="menu-item">
-            <a href="assets/config/logOut.php" class="logout">
-              <span class="material-symbols-rounded" aria-label="Log Out">logout</span>
-              <span class="menu-label">Log Out</span>
-            </a>
-          </li>
+          
         </ul>
       </div>
       <!-- Sidebar Footer -->
       <div class="sidebar-footer">
-        <button class="theme-toggle">
-          <div class="theme-label">
-            <span class="theme-icon material-symbols-rounded">dark_mode</span>
-            <span class="theme-text">Dark Mode</span>
-          </div>
-          <div class="theme-toggle-track">
-            <div class="theme-toggle-indicator"></div>
-          </div>
-        </button>
+        <li class="menu-item" style="list-style: none;">
+            <a href="assets/config/logOut.php" class="logout">
+              <span class="material-symbols-rounded">logout</span>
+              <span class="menu-label">Log Out</span>
+            </a>
+          </li>
       </div>
     </aside>
     <!-- Site main content -->
