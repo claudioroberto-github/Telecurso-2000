@@ -298,5 +298,4 @@ $logged = isset($_SESSION['user']) ? $_SESSION['user'] : '';
   </div>
   <script src="assets/js/home/home.js"></script>
 </body>
-
 </html>
